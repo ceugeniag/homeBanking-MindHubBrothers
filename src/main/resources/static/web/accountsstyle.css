@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Barlow', sans-serif;
+}
+
+.card{
+border-radius: 1rem;
+}
+main{
+    background-color: #f7baa6;
+    min-height: 85vh;
+}
+section{
+    background-color: #2a2e30;
+    margin: 2rem;
+    color: #f26430;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+.card{
+    border-radius: 1rem;
+}
+footer{
+    color: #f26430;
+    text-align: center;
+    padding: 2rem;
+}
