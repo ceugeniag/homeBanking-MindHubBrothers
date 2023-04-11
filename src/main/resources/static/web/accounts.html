@@ -27,8 +27,8 @@
                 </div>
             <div class="collapse" id="navbarToggleExternalContent">
                 <div class="bg-light p-4">
-                <h5 class="text-dark h4">Transferencias</h5>
-                <span class="text-muted"><a href="./contact">More information</a></span>
+                <h6 class="text-dark h4">Transactions</h6>
+                <span class="text-muted"><a href="./contact">Get in Touch</a></span>
                 </div>
             </div>
             </nav>
@@ -56,22 +56,16 @@
                 </div>
 
                 <section class="d-flex justify-content-around">
+                    <template v-for="account of clients.accounts">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                             <h5 class="card-title">{{clients.firstName}} {{clients.lastName}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{accounts[0].number}}</h6>
-                            <p class="card-text"> Account created on <br> {{accounts[0].creationDate.slice(0, 10)}} at {{accounts[0].creationDate.slice(11, 16)}} hs. <br> ${{accounts[1].balance}}</p>
-                            <a href="#" class="card-link">More info</a>
+                            <h6 class="card-subtitle mb-2 text-muted">{{account.number}} </h6>
+                            <p class="card-text"> Account created on <br> {{account.creationDate.slice(0, 10)}} at {{account.creationDate.slice(11, 16)}} hs. <br> ${{account.balance}}</p>
+                            <a :href="`./account.html?id=`+ account.id" class="card-link">More info</a>
                             </div>
                         </div>
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                            <h5 class="card-title">{{clients.firstName}} {{clients.lastName}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{accounts[1].number}}</h6>
-                            <p class="card-text"> Account created on <br> {{accounts[1].creationDate.slice(0, 10)}} at {{accounts[1].creationDate.slice(11, 16)}} hs. <br> ${{accounts[1].balance}}</p>
-                            <a href="#" class="card-link">More info</a>
-                            </div>
-                        </div>
+                    </template>
                 </section>
     </main>
     <footer class="d-flex justify-content-between p-5 bg-light">
@@ -79,6 +73,8 @@
             <a href="www.instagram.com"><img src="./assets/igicon.png" alt="logoig" width="40"></a>
             <a href="www.facebook.com"><img src="./assets/fbicon.png" alt="logofb" width="40"></a>
             <a href="tel:+"><img src="./assets/wappicon.png" alt="logowapp" width="40"></a>
+            <a href="www.github.com"><img src="./assets/logogithub.png" alt="logogithub"width="40"></a>
+            <a href="www.linkedin.com"><img src="./assets/pngwing.com.png" alt="logolinkedin"width="40"></a>
         </div>
         <h3>Cohort 44 - C. Eugenia Gonzalez</h3>
     </footer>

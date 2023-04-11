@@ -10,7 +10,7 @@ const app = createApp ({
             balance:"",
             creationDate:"",
             number:"",
-            accounts:"",
+            accounts:[],
             valorID :(new URLSearchParams(location.search)).get("id")
         }
     },
@@ -25,7 +25,6 @@ const app = createApp ({
                 console.log(this.clients);
                 this.accounts = this.clients.accounts
                 console.log(this.accounts);
-
             })
             .catch(error=>{
                 console.log(error);

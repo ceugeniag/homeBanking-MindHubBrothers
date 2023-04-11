@@ -1,9 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
-import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +19,14 @@ public class ClientController {
 
     @RequestMapping("/api/clients")
     public List<ClientDTO> getClient() {
-        return clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(toList());
+        return clientRepository.findAll()
+                .stream()
+                .map(client -> new ClientDTO(client))
+                .collect(toList());
     }
     @RequestMapping("api/clients/{id}")
         public ClientDTO getClient(@PathVariable Long id){
             Optional<Client> optionalClient = clientRepository.findById(id); //declarando un tipo de dato optional de tipo client
             return optionalClient.map(client -> new ClientDTO(client)).orElse(null);
         }
-
 }
