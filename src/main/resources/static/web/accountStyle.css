@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Barlow', sans-serif;
+}
+main{
+    background-color: #f7baa6;
+    min-height: 86vh;
+    background-size: contain;
+    background-position-y: 100%;
+    background-repeat: no-repeat;
+}
+footer{
+    color: #f26430;
+    text-align: center;
+    padding: 2rem;
+}
+.DEBIT{
+    color: red;
+}
+.CREDIT{
+    color: green;
+}
+button{
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 12px 24px;
+    border: 0;
+    color: #000021;
+    background:#f26430;
+    line-height: 1.15;
+    font-size: 16px;
+}
+button:hover {
+    transition: all .1s ease;
+    box-shadow: 0 0 0 0 #fff, 0 0 0 3px #f6561c;
+}
