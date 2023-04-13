@@ -54,18 +54,65 @@
                     <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-
-                <section class="d-flex justify-content-around">
+                <section>
+                    <h3 class="card-title text-light">{{clients.firstName}} {{clients.lastName}}</h3>
+                    <div class="d-flex justify-content-around">
                     <template v-for="account of clients.accounts">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                            <h5 class="card-title">{{clients.firstName}} {{clients.lastName}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{account.number}} </h6>
-                            <p class="card-text"> Account created on <br> {{account.creationDate.slice(0, 10)}} at {{account.creationDate.slice(11, 16)}} hs. <br> ${{account.balance}}</p>
-                            <a :href="`./account.html?id=`+ account.id" class="card-link">More info</a>
+                            <h5 class="card-subtitle mb-2 ">{{account.number}} </h5>
+                            <p class="card-text table-group-divider"> Account created on <br> {{account.creationDate.slice(0, 10)}} at {{account.creationDate.slice(11, 16)}} hs. <br> ${{account.balance}}</p>
+                            <a :href="`./account.html?id=`+ account.id" class="card-link">Transactions</a>
                             </div>
                         </div>
                     </template>
+                    </div>
+                </section>
+
+                <section>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <h2>LOANS</h2>
+                        </button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">My loans</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body"> 
+                                <template v-if="loans.length > 0 ">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Type of Loan</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Payments</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    <template v-for="loan of clients.loans">
+
+                                    <tr>
+                                    <th scope="row">{{loan.name}}</th>
+                                    <td>{{loan.amount}}</td>
+                                    <td>{{loan.payments}}</td>
+                                    </tr>
+                                </template>
+                                </tbody>
+                                </table>
+                            </template>
+                            <template  v-else >
+                            <h3>You don't have loans.</h3>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><a href="#">Get a loan!</a></button>
+                        </template>
+                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
                 </section>
     </main>
     <footer class="d-flex justify-content-between p-5 bg-light">

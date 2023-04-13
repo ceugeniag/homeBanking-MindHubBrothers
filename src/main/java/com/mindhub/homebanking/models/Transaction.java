@@ -16,11 +16,13 @@ public class Transaction {
     private double amount;
     private String description;
     private LocalDateTime transactionDate;
-    private double balance;
 
+    //ASOCIACION
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id")
     private Account account;
+
+    //CONSTRUCTOR
     public Transaction() { }
     public Transaction(TransactionType type, double amount, String description, LocalDateTime transactionDate) {
         this.type = type;
@@ -29,11 +31,12 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
+    //GETTER Y SETTER
+
     @JsonIgnore
     public Account getAccount() {
         return account;
     }
-
     public void setAccount(Account account) {
         this.account = account;
     }
@@ -65,6 +68,5 @@ public class Transaction {
         return id;
     }
 
-
-};
+}
 
