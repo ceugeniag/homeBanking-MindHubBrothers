@@ -3,12 +3,6 @@ const app = createApp ({
     data(){
         return{
             clients:[],
-            firstName: "",
-            lastName:"",
-            email:"",
-            balance:"",
-            creationDate:"",
-            number:"",
             account:[],
             transactions:[],
             valorID :(new URLSearchParams(location.search)).get("id"),
@@ -24,7 +18,7 @@ const app = createApp ({
             .then(response => {
                 this.account = response.data;
                 console.log(this.account);
-                this.transactions= this.account.transactions
+                this.transactions= this.account.transactions;
                 console.log(this.transactions);
             })
             .catch(error=>{

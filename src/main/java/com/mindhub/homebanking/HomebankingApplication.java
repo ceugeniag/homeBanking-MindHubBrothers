@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com");
 			clientRepository.save(client1);
@@ -111,6 +113,17 @@ public class HomebankingApplication {
 			client3.addAccount(account3);
 			clientRepository.save(client3);
 
+			Card card1 = new Card(client1.getFirstName()+ " " + client1.getLastName(), CardType.DEBIT, ColorType.GOLD, "0001 0001 0001 0001", 111, LocalDate.now(), LocalDate.now().plusYears(5), client1);
+			cardRepository.save(card1);
+			client1.addCard(card1);
+			Card card2 = new Card(client1.getFirstName()+ " " + client1.getLastName(), CardType.CREDIT, ColorType.TITANIUM, "1000 1000 1000 1000", 100, LocalDate.now(), LocalDate.now().plusYears(5), client1);
+			cardRepository.save(card2);
+			client1.addCard(card2);
+			Card card3 = new Card(client2.getFirstName()+ " " + client2.getLastName(), CardType.CREDIT, ColorType.SILVER, "1001 1001 1001 1001", 101, LocalDate.now(), LocalDate.now().plusYears(5), client2);
+			cardRepository.save(card3);
+			client2.addCard(card3);
+			clientRepository.save(client1);
+			clientRepository.save(client2);
 		};
 	}
 }

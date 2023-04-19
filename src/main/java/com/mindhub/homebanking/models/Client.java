@@ -10,17 +10,20 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    private String email = "";
-    private String firstName = "";
-    private String lastName = "";
+    private String email;
+    private String firstName;
+    private String lastName;
 
 
     //ASOCIACION
-    @OneToMany(mappedBy="client", fetch=FetchType.EAGER) //Asociacion de uno a muchos
-    private Set<Account> accounts = new HashSet<>(); //Crea un espacio en memoria
+    @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
+    private Set<Account> accounts = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private  Set<ClientLoan> clientLoans = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private  Set<Card> cards = new HashSet<>();
 
 
     //CONSTRUCTOR
@@ -72,6 +75,8 @@ public class Client {
     public Set<Account> getAccountSet() {
         return accounts;
     }
+    public Set<Card> getCards() { return cards; }
+    public void setCards(Set<Card> cards) { this.cards = cards; }
 
 
     //METODOS
@@ -83,6 +88,9 @@ public class Client {
         clientLoan.setClient(this);
         clientLoans.add(clientLoan);
     }
-
+    public void addCard(Card card) {
+        card.setClient(this);
+        cards.add(card);
+    }
 
 }

@@ -10,9 +10,10 @@ public class ClientDTO {
     private String lastName;
     public Set<AccountDTO> accounts;
     public Set<ClientLoanDTO> loans;
+    public Set<CardDTO> cards;
 
     //CONSTRUCTOR
-    public ClientDTO(Client client) { //Se trabaja con las propiedades de client, las abstraemos
+    public ClientDTO(Client client) {
         this.id = client.getId();
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
@@ -24,6 +25,10 @@ public class ClientDTO {
         this.loans= client.getClientLoans()
                 .stream()
                 .map(clientLoan -> new ClientLoanDTO(clientLoan))
+                .collect(Collectors.toSet());
+        this.cards = client.getCards()
+                .stream()
+                .map(card -> new CardDTO(card))
                 .collect(Collectors.toSet());
     }
 
@@ -42,4 +47,5 @@ public class ClientDTO {
     }
     public Set<AccountDTO> getAccounts() { return accounts;}
     public Set<ClientLoanDTO> getLoans() { return loans;}
+
 }
