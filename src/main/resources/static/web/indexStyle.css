@@ -1,0 +1,342 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Barlow', sans-serif;
+}
+a{
+    text-decoration: none !important;
+    color: antiquewhite !important;
+}
+.navbar-brand{
+    color:#fff;
+    align-items: center;
+}
+main{
+    background-color: #f5eadb74;
+    min-height: 85vh;
+    background-size:cover;
+	  background-attachment: fixed;
+	  background-image: url(./assets/login-bg.jpg);
+    background-repeat: no-repeat;
+    background-attachment:initial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* TITULO OPCIONAL 1 
+.titule-container{
+    max-width: 600px;
+}
+.titule {
+    text-align: center; 
+    font-family: 'Barlow', sans-serif;
+    font-weight: bold; 
+    font-size: 50px; 
+    color: #d4ac74; 
+    text-shadow: -2px 0 #65481f, 0 1px #65481f, 1px 0 #65481f, 0 -1px #65481f;
+    padding: 1rem;
+} */
+
+/* LOGIN */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* font-family: "Jost", sans-serif; */
+    /* background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); */
+  }
+  .main {
+    width: 350px;
+    height: 450px;
+    /* background: red; */
+    overflow: hidden;
+    /* background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38")
+      no-repeat center/ cover; */
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+    /* position: relative; */
+    /* left: 20%; */
+  }
+  .contenedor{
+    width: 350px;
+    height: 400px;
+    /* position: absolute; */
+  }
+  #chk {
+    display: none;
+  }
+  .signup {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  label {
+    color: #fff;
+    font-size: 2.3em;
+    justify-content: center;
+    display: flex;
+    margin: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+  }
+  input {
+    width: 60%;
+    height: 20px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+  }
+  button {
+    width: 60%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #fff;
+    background: #65481f;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: 0.2s ease-in;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #65481f;
+  }
+  .login {
+    height: 460px;
+    background: #eee;
+    border-radius: 60% / 10%;
+    transform: translateY(-180px);
+    transition: 0.8s ease-in-out;
+  }
+  .login label {
+    color: #65481f;
+    transform: scale(0.6);
+  }
+  
+  #chk:checked ~ .login {
+    transform: translateY(-500px);
+  }
+  #chk:checked ~ .login label {
+    transform: scale(1);
+  }
+  #chk:checked ~ .signup label {
+    transform: scale(0.6);
+  }
+
+/* TITULO OPCIONAL 2 */
+@import url(https://fonts.googleapis.com/css?family=Martel+Sans:200,300,400,800,900);
+@import url(http://c-araujo.com/assets/fonts/starJedi/SE/style.css);
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    }
+
+    body {
+    font-family: "Martel Sans", sans-serif;
+    background-color: #000;
+    }
+
+    section {
+    height: 350px;
+    width: 94%;
+    /* box-shadow: 0px 0px 146px 21px rgba(0, 0, 0, 0.75); */
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto 0px;
+    }
+    section a {
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    font-size: 3.875em;
+    font-weight: 900;
+    color: #fff;
+    }
+    section a:after, section a:before {
+    content: "";
+    }
+    section.head {
+    background-color: rgba(255, 255, 255, 0);
+    position: relative;
+    z-index: 10;
+    }
+    section.head a {
+    width: 652px;
+    height: 94px;
+    line-height: 78px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -326px;
+    margin-top: -39px;
+    font-weight: 200;
+    /* color: #BABABA; */
+    -webkit-transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+    -moz-transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+    transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+    }
+    section.head a:before, section.head a:after {
+    color: #000;
+    font-weight: 900;
+    font-size: 30px;
+    text-transform: none;
+    display: block;
+    -webkit-transition: inherit;
+    -moz-transition: inherit;
+    transition: inherit;
+    }
+    section.head a:before {
+    content: attr(data-bf);
+    position: absolute;
+    top: -45px;
+    left: -5px;
+    }
+    section.head a:after {
+    content: attr(data-af);
+    position: absolute;
+    right: 0;
+    bottom: -30px;
+    }
+    section.head a:hover {
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    transform: scale(1.05);
+    }
+    section.head a:hover:before {
+    -webkit-transform: scale(1.2) translate(-25px, -15px);
+    -moz-transform: scale(1.2) translate(-25px, -15px);
+    -ms-transform: scale(1.2) translate(-25px, -15px);
+    -o-transform: scale(1.2) translate(-25px, -15px);
+    transform: scale(1.2) translate(-25px, -15px);
+    }
+    section.head a:hover:after {
+    -webkit-transform: scale(1.2) translate(25px, 15px);
+    -moz-transform: scale(1.2) translate(25px, 15px);
+    -ms-transform: scale(1.2) translate(25px, 15px);
+    -o-transform: scale(1.2) translate(25px, 15px);
+    transform: scale(1.2) translate(25px, 15px);
+    }
+
+/* LOGIN -- */
+.container{
+    display: flex; 
+    justify-content: center; 
+    /* padding-top: 10rem ; */
+
+}
+.login {
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    font-weight: bold;
+    font-size: x-large;
+}
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    width: 300px;
+    flex-direction: column;
+    gap: 35px;
+    background: #e3e3e361;
+    border-radius: 8px;
+	/* left: 4em;
+	top: 10em; */
+}
+.inputBox {
+    position: relative;
+    width: 250px;
+}
+.inputBox input {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    color: #000;
+    font-size: 1em;
+    background: transparent;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+    transition: 0.1s;
+    border-bottom-left-radius: 8px;
+}
+.inputBox span {
+    margin-top: 5px;
+    position: absolute;
+    left: 0;
+    transform: translateY(-4px);
+    margin-left: 10px;
+    padding: 10px;
+    pointer-events: none;
+    font-size: 12px;
+    color: #000;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 3px;
+    border-radius: 8px;
+}
+.inputBox input:valid~span,
+.inputBox input:focus~span {
+    transform: translateX(113px) translateY(-15px);
+    font-size: 0.8em;
+    padding: 5px 10px;
+    background: #000;
+    letter-spacing: 0.2em;
+    color: #fff;
+    border: 2px;
+}
+.inputBox input:valid,
+.inputBox input:focus {
+    border: 2px solid #000;
+    border-radius: 8px;
+}
+.enter {
+    height: 45px;
+    width: 100px;
+    border-radius: 5px;
+    border: 2px solid #000;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 0.5s;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 1em;
+}
+.enter:hover {
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+footer{
+    color: #65481f;
+    text-align: center;
+    padding: 2rem;
+}
+/* FOOTER LOGOS */

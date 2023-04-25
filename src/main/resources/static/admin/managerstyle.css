@@ -1,0 +1,12 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+main{
+    background-color: rgba(234, 179, 161, 0.572);
+}
+thead{
+    background-color: darksalmon;
+}
