@@ -7,6 +7,7 @@ public class ClientLoanDTO {
     private int payments;
     private String name;
     private long loanId;
+    private String loanName; //REVISAR
 
     //CONSTRUCTOR
     public ClientLoanDTO(ClientLoan clientLoan) {
@@ -15,6 +16,7 @@ public class ClientLoanDTO {
         this.name= clientLoan.getLoan().getName();
         this.amount = clientLoan.getAmount();
         this.payments = clientLoan.getPayments();
+        this.loanName= clientLoan.getLoan().getName(); //VER SI ESTA BIEN
     }
 
     // GETTER

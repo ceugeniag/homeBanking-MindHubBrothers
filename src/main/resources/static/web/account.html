@@ -13,26 +13,25 @@
 </head>
 <body>
     <div id="app">
-
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
-                    <img src="./assets/icono-logo.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                    MindHub - Brothers
-                </a>
-
+                <a class="navbar-brand" href="./index.html">
+                <img src="./assets/icono-logo.png" alt="icon" width="50" class="d-inline-block align-text-center">
+                MindHub Brothers</a><a @click="logout" href="./index.html"><img src="./assets/cerrar.png" alt="" width="50" ></a>
                 </div>
-            <div class="collapse" id="navbarToggleExternalContent">
-                <div class="bg-light p-4">
-                    <h6 class="text-dark h4"><a href="./cards.html">Cards</a></h6>
-                    <h6 class="text-dark h4"><a href="./account.html" class="card-link">Transactions</a></h6>
-                    <h6 class="text-dark h4"><a href="./contact">Get in Touch!</a></h6>
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="p-4">
+                        <h6 class="text-dark h4"><a href="./cards.html">Cards</a></h6>
+                        <h6 class="text-dark h4"><a href="./accounts.html" class="card-link">Accounts</a></h6>
+                        <h6 class="text-dark h4"><a href="./account.html" class="card-link">Transactions</a></h6>
+                        <h6 class="text-dark h4"><a href="#">Get in Touch!</a></h6>
+                        <h6 class="text-dark h4"><a href="./index.html">Log out</a></h6>
+                    </div>
                 </div>
-            </div>
-            </nav>
+                </nav>
             <img class="img-fluid" src="./assets/getintouchBanner.png" alt="">
             <a href="./accounts.html"><img class= "img-fluid" src="./assets/loanbanner.png" alt=""></a>
 

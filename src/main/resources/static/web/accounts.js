@@ -14,7 +14,7 @@ const app = createApp ({
     },
     methods:{
         loadData(){
-            axios.get('http://localhost:8080/api/clients/1')
+            axios.get('http://localhost:8080/api/clients/current')
             .then(response => {
                 this.clients = response.data;
                 console.log(this.clients);
@@ -28,6 +28,11 @@ const app = createApp ({
                 console.log(error);
             });
         },
+        logout(){
+            axios.post('/api/logout')
+            .then(response=> console.log('signed out!!!'), (window.location.href = '/web/index.html'))
+            .catch(error => console.log(error));
+        }
     },
     
     })

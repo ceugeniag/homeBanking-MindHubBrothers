@@ -1,10 +1,12 @@
 package com.mindhub.homebanking;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,14 +14,18 @@ import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
+
+	@Autowired
+	private PasswordEncoder passwordEnconder;
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
+
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
-			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com");
+			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("melba"));
 			clientRepository.save(client1);
 			Account account1= new Account("VIN001", LocalDateTime.now(), 5000.00);
 			client1.addAccount(account1);
@@ -67,7 +73,7 @@ public class HomebankingApplication {
 			Loan loan3 = new Loan("Automotriz", 300000, List.of(6, 12, 24, 36));
 			loanRepository.save(loan3);
 
-			Client client2 = new Client("Diego", "Perez", "diego@mindhub.com");
+			Client client2 = new Client("Diego", "Perez", "diego@mindhub.com", passwordEnconder.encode("diego"));
 			Account account4= new Account("VIN003", LocalDateTime.now(), 5600.00);
 			client2.addAccount(account4);
 			clientRepository.save(client2);
@@ -107,7 +113,7 @@ public class HomebankingApplication {
 			clientRepository.save(client2);
 			clientLoanRepository.save(clientLoan4);
 
-			Client client3 = new Client("Amelia", "Perez", "ame@mindhub.com");
+			Client client3 = new Client("Amelia", "Perez", "amelia@mindhub.com", passwordEnconder.encode("amelia"));
 			Account account3= new Account("VIN003", LocalDateTime.now(), 10000.00);
 			accountRepository.save(account3);
 			client3.addAccount(account3);
@@ -124,6 +130,8 @@ public class HomebankingApplication {
 			client2.addCard(card3);
 			clientRepository.save(client1);
 			clientRepository.save(client2);
+			Client client4 = new Client("admin", "admin", "admin@admin.com", passwordEnconder.encode("admin"));
+			clientRepository.save(client4);
 		};
 	}
 }

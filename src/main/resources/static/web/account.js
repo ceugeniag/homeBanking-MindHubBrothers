@@ -28,6 +28,11 @@ const app = createApp ({
         sorted(){
             if (this.transactions != "") {
                 return this.transactions.sort((a,b) => b.transactionsDate - a.transactionsDate)}         
+        },
+        logout(){
+            axios.post('/api/logout')
+            .then(response=> console.log('signed out!!!'), (window.location.href = '/web/index.html'))
+            .catch(error => console.log(error));
         }
     },
     })

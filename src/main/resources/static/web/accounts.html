@@ -14,24 +14,25 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
-                    <img src="./assets/icono-logo.png" alt="" width="50" class="d-inline-block align-text-top">
-                    MindHub - Brothers
-                </a>
+                <a class="navbar-brand" href="./index.html">
+                <img src="./assets/icono-logo.png" alt="icon" width="50" class="d-inline-block align-text-center">
+                MindHub Brothers</a><a @click="logout" href="./index.html"><img src="./assets/cerrar.png" alt="" width="50" ></a>
                 </div>
-            <div class="collapse" id="navbarToggleExternalContent">
-                <div class="bg-light p-4">
-                <h6 class="text-dark h4"><a href="./cards.html">Cards</a></h6>
-                <h6 class="text-dark h4"><a href="./account.html" class="card-link">Transactions</a></h6>
-                <h6 class="text-dark h4"><a href="./contact">Get in Touch!</a></h6>
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="p-4">
+                        <h6 class="text-dark h4"><a href="./cards.html">Cards</a></h6>
+                        <h6 class="text-dark h4"><a href="./accounts.html" class="card-link">Accounts</a></h6>
+                        <h6 class="text-dark h4"><a href="./account.html" class="card-link">Transactions</a></h6>
+                        <h6 class="text-dark h4"><a href="#">Get in Touch!</a></h6>
+                        <h6 class="text-dark h4"><a href="./index.html">Log out</a></h6>
+                    </div>
                 </div>
-            </div>
-            </nav>
+                </nav>
             <img class="img-fluid" src="./assets/getintouchBanner.png" alt="">
             <a href="./accounts.html"><img class= "img-fluid" src="./assets/loanbanner.png" alt=""></a>
 
@@ -69,10 +70,39 @@
                                 </div>
                             </div>
                         </template>
-                        </div>
-                </template>
+                       
                 </section>
                 <section>
+                    <h2 class="titule">MY LOANS</h2>
+                    <div class="modal-body"> 
+                        <div v-if="loans.length != 0 ">
+                        <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">Type of Loan</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Payments</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            <template v-for="loan of clients.loans">
+                            <tr>
+                            <th scope="row">{{loan.name}}</th>
+                            <td>{{loan.amount}}</td>
+                            <td>{{loan.payments}}</td>
+                            </tr>
+                            </template>
+                        </tbody>
+                        </table>
+                            </div>
+                        <template v-else>
+                    <h3>You don't have loans.</h3>
+                    <button class="button" type="button" data-bs-dismiss="modal"><a href="#">Get a loan!</a></button>
+                        </template> 
+                    </div>
+
+                    <!-- MODAL DE LOANS -->
+<!-- 
                     <button type="button"  class="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <h2 class="titule">MY LOANS</h2>
                         </button>
@@ -84,7 +114,7 @@
                                 <button type="button"  class="button" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body"> 
-                                <template v-if= " loans.length > 0 ">
+                                <template v-if= "loans.length != 0 ">
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -94,27 +124,29 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
-                                    <template v-for="loan of clients.loans">
+                                    <div v-for="loan of clients.loans">
                                     <tr>
                                     <th scope="row">{{loan.name}}</th>
                                     <td>{{loan.amount}}</td>
                                     <td>{{loan.payments}}</td>
                                     </tr>
-                                </template>
+                                    </div>
                                 </tbody>
                                 </table>
-                            </template>
-                            <template v-else>
+                                </template>
+                                <template v-else>
                             <h3>You don't have loans.</h3>
                             <button class="button" type="button" data-bs-dismiss="modal"><a href="#">Get a loan!</a></button>
-                            </template>
-                        </div>
+                                </template>
+                            </div>
                             <div class="modal-footer">
                                 <button  class="button" type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                             </div>
                         </div>
-                        </div>
+                        </div> -->
+
+
                 </section>
     </main>
     <img class="img-fluid" src="./assets/covidbanner.png" alt="">
@@ -134,3 +166,6 @@
     <script src="./accounts.js"></script>
 </body>
 </html>
+
+
+
