@@ -29,8 +29,14 @@ const app = createApp ({
             });
         },
         logout(){
-            axios.post('/api/logout')
+            axios.post('/api/logout'),{
+            headers: { 'content-type': 'application/x-www-form-urlencoded'}}
             .then(response=> console.log('signed out!!!'), (window.location.href = '/web/index.html'))
+            .catch(error => console.log(error))
+        },
+        createAccount(){
+            axios.post('/api/clients/current/accounts')
+            .then(response=>console.log(response), (this.loadData()) (window.location.reload))
             .catch(error => console.log(error));
         }
     },

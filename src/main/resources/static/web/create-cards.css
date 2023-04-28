@@ -1,0 +1,143 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Barlow', sans-serif;
+}
+main{
+    min-height: 85vh;
+    background-color: #f7e8d4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%2365481f' fill-opacity='0.24' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+footer{
+    color: #65481f;
+    text-align: center;
+    padding: 2rem;
+}.button, .buttonCreated {
+    background-color: #d2b182;
+    border: none;
+    padding: 1rem;
+    /* font-size: 1rem; */
+    width: 15em;
+    border-radius: 1rem;
+    color: #65481f;
+    box-shadow: 0 0.4rem #dfd9d9;
+    cursor: pointer;
+}
+
+button:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+
+button:hover:not(:disabled) {
+    background: #65481f;
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+}
+
+button:disabled {
+    cursor: auto;
+    color: grey;
+}
+.card-link{
+    text-decoration: none !important;
+    color: #65481f;
+}
+a{
+    text-decoration: none !important;
+    color: #65481f !important;
+}
+fieldset {
+	padding: 2em;
+	border-color: #d4d4d4;
+	border-style: solid;
+	border-width: 2px;
+}
+
+legend {
+	color: #65481f;
+	padding: 0.3em 0.6em;
+	border: 2px solid #d4d4d4;
+	background: rgba(255, 255, 255, 0.43);
+	font-size: 1.3em;
+}
+legend.radio {
+	border-radius: 50px;
+}
+
+.container ul {
+	margin-top: 0;
+	padding-left: 0em;
+}
+.container ul li {
+	list-style-type: none;
+}
+.container ul + ul {
+	margin-bottom: 0;
+}
+.container ul + ul > li + li label {
+	margin-bottom: 0;
+}
+label {
+	font-weight: 600;
+	color: #65481f;
+	margin-bottom: 11px;
+	width: 100%;
+	float: left;
+	cursor: pointer;
+	padding: 0 0.6em;
+	box-sizing: border-box;
+	background: #e6e6e6a2;
+	transition: all 0.5s ease 0s;
+}
+input[type="radio"]{
+	display: none;
+}
+input[type="radio"] + label{
+	line-height: 3em;
+}
+
+input[type="radio"] + label {
+	border-radius: 50px;
+}
+
+input[type="radio"] + label:before{
+	content: "";
+	width: 26px;
+	height: 26px;
+	float: left;
+	margin-right: 0.5em;
+	border: 2px solid #ccc;
+	background: #fff;
+	margin-top: 0.5em;
+}
+input[type="radio"] + label:before {
+	border-radius: 100%;
+}
+
+input[type="radio"]:checked + label {
+	background: #c1eec2;
+}
+
+input[type="radio"]:checked + label:after {
+	content: "";
+	width: 0;
+	height: 0;
+	border: 7px solid #0fbf12;
+	float: left;
+	margin-left: -1.85em;
+	margin-top: 1em;
+	border-radius: 100%;
+}
+
+@media (max-width: 650px) {
+	.content {
+		width: 100%;
+	}
+}
+form{
+    max-width: 980px;
+	margin: 0 auto;
+}

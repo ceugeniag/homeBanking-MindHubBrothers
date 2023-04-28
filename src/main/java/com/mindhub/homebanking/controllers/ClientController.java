@@ -10,11 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import static java.util.stream.Collectors.toList;
 
@@ -41,7 +39,6 @@ public class ClientController {
             return optionalClient.map(client -> new ClientDTO(client)).orElse(null);
         }
     @RequestMapping(path = "api/clients", method = RequestMethod.POST)
-
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
@@ -57,7 +54,7 @@ public class ClientController {
         int number = random.nextInt(999999);*/
         String accountNumber;
         do {
-            int randomNumber = (int) (Math.random() * 100000000);
+            int randomNumber = (int) (Math.random() * 99999999);
             accountNumber = "VIN" + String.format("%08d", randomNumber);
         } while (accountRepository.findByNumber(accountNumber) != null);
 
@@ -70,7 +67,7 @@ public class ClientController {
     }
 
     @RequestMapping("/api/clients/current")
-    public ClientDTO getAll(Authentication authentication) {
+    public ClientDTO getCurrentClient(Authentication authentication) {
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }
 

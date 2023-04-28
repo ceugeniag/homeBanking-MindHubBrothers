@@ -21,7 +21,7 @@
                 </button>
                 <a class="navbar-brand" href="./index.html">
                 <img src="./assets/icono-logo.png" alt="icon" width="50" class="d-inline-block align-text-center">
-                MindHub Brothers</a><a @click="logout" href="./index.html"><img src="./assets/cerrar.png" alt="" width="50" ></a>
+                MindHub Brothers</a><a @click="logout" href="#"><img src="./assets/cerrar.png" alt="" width="50" ></a>
                 </div>
                 <div class="collapse" id="navbarToggleExternalContent">
                     <div class="p-4">
@@ -70,7 +70,30 @@
                                 </div>
                             </div>
                         </template>
-                       
+                        <div v-if="accounts.length != 3">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="buttonCreated" data-bs-toggle="modal" data-bs-target="#exampleModal">Create a new account</button>
+                                        <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new account</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    You are going to create a new account
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button @click="createAccount" class="buttonCreated" >Create!</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <template v-else>
+                                    </template>
                 </section>
                 <section>
                     <h2 class="titule">MY LOANS</h2>

@@ -44,11 +44,13 @@ const app = createApp ({
                 .post('/api/clients', `firstName=${this.firstname}&lastName=${this.lastname}&email=${this.email}&password=${this.password}`, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded' }
                 })
-                .then(response => console.log(response))
+                .then(response => console.log(response)), (window.location.href = '/web/index.html')
         },
         logout(){
             axios.post('/api/logout')
-            .then(response=> console.log('signed out!!!'), (window.location.href = '/web/index.html'))
+            .then(response=> (window.location.href = '/web/index.html'), 
+            console.log('signed out!!!')
+            )
             .catch(error => console.log(error));
         }
     },

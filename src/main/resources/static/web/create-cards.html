@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./assets/icono-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./create-cards.css">
+    <title>Create a new card - MindHub Brothers</title>
+</head>
+<body id="app">
+    <nav class="navbar navbar-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="./index.html">
+            <img src="./assets/icono-logo.png" alt="icon" width="50" class="d-inline-block align-text-center">
+            MindHub Brothers</a><a @click="logout" href="./index.html"><img src="./assets/cerrar.png" alt="" width="50" ></a>
+            </div>
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="p-4">
+                    <h6 class="text-dark h4"><a href="./cards.html">Cards</a></h6>
+                    <h6 class="text-dark h4"><a href="./accounts.html" class="card-link">Accounts</a></h6>
+                    <h6 class="text-dark h4"><a href="./account.html" class="card-link">Transactions</a></h6>
+                    <h6 class="text-dark h4"><a href="#">Get in Touch!</a></h6>
+                    <h6 class="text-dark h4"><a href="./index.html">Log out</a></h6>
+                </div>
+            </div>
+            </nav>   
+            <img class="img-fluid banner" src="./assets/getintouchBanner.png" alt="">
+            <main>
+                <!-- <form @submit.prevent="createCard">
+                    <div class="form-check">
+                        <input class="form-check-input" class="mycheck" type="radio" name="cardType" value="DEBIT" id="cardType" v-model="cardType">
+                        <label class="form-check-label" class="mycheck"for="cardType">
+                            Debit
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cardType" value="CREDIT" id="cardType" v-model="cardType">
+                        <label class="form-check-label" for="cardType">
+                            Credit
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" name="color" type="radio" value="SILVER" id="colorType" v-model="colorType">
+                        <label class="form-check-label" for="colorType">
+                            SILVER
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" name="color" type="radio" value="GOLD" id="colorType" v-model="colorType">
+                        <label class="form-check-label" for="colorType">
+                            GOLD
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" name="color" type="radio" value="TITANIUM" id="colorType" v-model="colorType">
+                        <label class="form-check-label" for="colorType">
+                            TITANIUM
+                        </label>
+                    </div> -->
+
+                    <form  @submit.prevent="createCard">
+                        <div class="content">
+                            <fieldset>
+                                <legend class="radio">CARD TYPE</legend>
+                                <div class="container">
+                                    <ul>
+                                        <li>
+                                            <input type="radio" name="cardType" value="DEBIT" id="cardType1" v-model="cardType">
+                                            <label for="cardType1">Debit</label>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="cardType" value="CREDIT" id="cardType2" v-model="cardType">
+                                            <label for="cardType2">Credit</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="content">
+                            <fieldset>
+                                <legend class="radio">CARD TYPE</legend>
+                                    <div class="container">
+                                        <ul>
+                                        <li>
+                                            <input type="radio" name="colorType" value="SILVER" id="colorType3" v-model="colorType">
+                                            <label for="colorType3">Silver</label>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="colorType" value="GOLD" id="colorType4" v-model="colorType">
+                                            <label for="colorType4">Gold</label>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="colorType" value="TITANIUM" id="colorType5" v-model="colorType">
+                                            <label for="colorType5">Titanium</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <!-- Button trigger modal -->
+
+                    <button type="button" class="buttonCreated" data-bs-toggle="modal" data-bs-target="#exampleModal">Get a new card!</button>
+                        <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Get a new card</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    You are going to create a new card
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="button" type="submit" value="submit" >Create!</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                </form>
+                <!-- <form action="">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            SILVER
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            GOLD
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            TITANIUM
+                        </label>
+                    </div>
+                </form> -->
+            </main>
+            <img class="img-fluid" src="./assets/covidbanner.png" alt="">
+            <footer class="d-flex justify-content-between p-5 bg-light">
+                <div class="redes">
+                    <a href="tel:+3624767901"><img src="./assets/wappicon.png" alt="logowapp" width="40"></a>
+                    <a href="https://github.com/ceugeniag"><img src="./assets/logogithub.png" alt="logogithub"width="40"></a>
+                    <a href="https://www.linkedin.com/in/gonzalezceugenia/"><img src="./assets/pngwing.com.png" alt="logolinkedin"width="40"></a>
+                </div>
+                <h3>Cohort 44 - C. Eugenia Gonzalez</h3>
+            </footer>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+            <!-- <script src="./cards.js"></script> -->
+            <script src="./create-cards.js"></script>
+        </body>
+        </html>

@@ -132,6 +132,10 @@ public class HomebankingApplication {
 			clientRepository.save(client2);
 			Client client4 = new Client("admin", "admin", "admin@admin.com", passwordEnconder.encode("admin"));
 			clientRepository.save(client4);
+
+			Account account5 = new Account("VIN006", LocalDateTime.now(), 150);
+			client2.addAccount(account5);
+			clientRepository.save(client2);
 		};
 	}
 }

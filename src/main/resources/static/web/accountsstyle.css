@@ -49,8 +49,8 @@ footer{
     text-shadow: -1px 0 #65481f, 0 1px #65481f, 1px 0 #65481f, 0 -1px #65481f;
     padding: 2rem;
 }
-.button {
-        background-color: #eee;
+.button, .buttonCreated {
+        background-color: #d2b182;
         border: none;
         padding: 1rem;
         /* font-size: 1rem; */
@@ -76,4 +76,8 @@ footer{
     button:disabled {
         cursor: auto;
         color: grey;
+    }
+    a{
+        text-decoration: none !important;
+        color: #65481f !important;
     }

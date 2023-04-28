@@ -27,16 +27,17 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(inputEmail-> {
+        auth.userDetailsService (inputEmail-> {
             Client client = clientRepository.findByEmail(inputEmail);
             if (client != null) {
 
-                if (client.getEmail().contentEquals("admin")){
-                return new User(client.getEmail(), client.getPassword(),
+                if (client.getEmail().contentEquals("admin@admin.com")){
+                return new User(client.getEmail(), client.getPassword(), //Usuario autenticado, con el rol de admin
                         AuthorityUtils.createAuthorityList( "ADMIN"));
             } else {
                     return new User(client.getEmail(), client.getPassword(),
                             AuthorityUtils.createAuthorityList("CLIENT"));
+                    //si estatodo bien y no contiene admin, se crea un usuario autenticado con el rol de cliente
                 }
             } else {
                 throw new UsernameNotFoundException("Unknown user: " + inputEmail);
