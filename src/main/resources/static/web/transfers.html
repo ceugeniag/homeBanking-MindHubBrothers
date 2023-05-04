@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="./transfersStyle.css">
     <title>Transfers - MindHub Brothers</title>
 </head>
-<body id="app">
+<body>
+    <div id="app">
     <nav class="navbar navbar-light">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,6 +28,7 @@
                     <h6 class="text-dark h4"><a href="./accounts.html" class="card-link">Accounts</a></h6>
                     <h6 class="text-dark h4"><a href="./account.html" class="card-link">Transactions</a></h6>
                     <h6 class="text-dark h4"><a href="./transfers.html">Transfers</a></h6>
+                    <h6 class="text-dark h4"><a href="./loan-application.html">Apply loans</a></h6>
                     <h6 class="text-dark h4"><a href="#">Get in Touch!</a></h6>
                     <h6 class="text-dark h4"><a href="./index.html">Log out</a></h6>
                 </div>
@@ -41,18 +43,15 @@
                 <div class="contenedor">
                     <div class="main">
                         <input type="checkbox" id="chk" aria-hidden="true">
-                        <div class="signup">
                             <form>
                             <label for="chk" aria-hidden="true">Transfer to my own account</label>
                             <!-- <input v-model="numberAccountFrom" type="text" name="txt" placeholder="Account From" required=""> -->
-                            <select name="" id="" placeholder="My own account">
-                                <template v-for="account of clients.accounts">
-                                    <option v-model="numberAccountFrom" :value="account.number" placeholder="My own account">{{account.number}}</option>
-                                </template>
+                            <select v-model="numberAccountFrom" name="" id="" >
+                                <option v-for="account of clients.accounts" :value="account.number">{{account.number}}</option>
                             </select>
-                            <select placeholder="Account To" name="" id="">
+                            <select  v-model="numberAccountTo" name="" id="">
                                 <template v-for="account of clients.accounts">
-                                    <option v-model="numberAccountTo" :value="account.number" placeholder="Account To">{{account.number}}</option>
+                                    <option :value="account.number">{{account.number}}</option>
                                 </template>
                             </select>
                             <!-- <input v-model="numberAccountTo" type="text" name="txt" placeholder="Account To" required=""> -->
@@ -64,7 +63,12 @@
                         <div class="login">
                             <form>
                             <label for="chk" aria-hidden="true">Transfer to another account</label>
-                            <input v-model="numberAccountFrom" type="text" name="txt" placeholder="Account From" required="">
+                            <select v-model="numberAccountFrom" name="numberAccountFrom" id="" >
+                                <template v-for="account of clients.accounts">
+                                    <option :value="account.number">{{account.number}} </option>
+                                </template>
+                            </select>
+                            <!-- <input v-model="numberAccountFrom" type="text" name="txt" placeholder="Account From" required=""> -->
                             <input v-model="numberAccountTo" type="text" name="txt" placeholder="Account To" required="">
                             <input v-model="amount" type="text" name="amount" placeholder="Amount" required="">
                             <input v-model="description" type="text" name="description" placeholder="Description" required="">
@@ -83,12 +87,10 @@
                 </div>
                 <h3>Cohort 44 - C. Eugenia Gonzalez</h3>
             </footer>
+        </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="./transfer.js"></script>
-    <script src="./account.js"></script>
-
-    
+    <script src="./transfer.js"></script>    
 </body>
 </html>

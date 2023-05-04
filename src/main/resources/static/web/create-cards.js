@@ -28,10 +28,43 @@ const app = createApp ({
             });
         },
         createCard(){
-            axios.post('/api/clients/current/cards',`cardType=${this.cardType}&colorType=${this.colorType}`,{
-                headers:{'content-type':'application/x-www-form-urlencoded'}})
-                .then(response => console.log(response),console.log(this.clients), (window.location.href = '/web/cards.html'))
-        },
+            Swal.fire({
+                icon: 'warning',
+                title: 'You are about to get a new card, are you sure?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, create it!',
+                cancelButtonText: 'Cancel',
+                timer: 6000,
+            })
+            .then((result) =>{
+                if(result.isConfirmed){
+                    axios.post('/api/clients/current/accounts')
+                    .then(response =>{
+                        if (response.status == "201"){
+                            axios.post('/api/clients/current/cards',`cardType=${this.cardType}&colorType=${this.colorType}`)
+                            this.createCard = true,
+                            this.loadData()
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'You have a new Card!',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Accepted',
+                                    cancelButtonText: 'Cancel',
+                                    timer: 6000,
+                                })
+                             (window.location.href = '/web/cards.html')
+                        }
+                    })
+                .catch(error=>
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.response.data,
+                    timer: 6000,
+                }));
+        }
+        })
+    },
         logout(){
             axios.post('/api/logout')
             .then(response=> console.log(response), (window.location.href = '/web/index.html'))

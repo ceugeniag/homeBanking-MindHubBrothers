@@ -66,11 +66,11 @@ public class HomebankingApplication {
 			accountRepository.save(account1);
 			transactionRepository.save(transaction4);
 
-			Loan loan1 = new Loan("Hipotecario", 500000, List.of(12,24,36,48,60));
+			Loan loan1 = new Loan("Mortgage", 500000, List.of(12,24,36,48,60));
 			loanRepository.save(loan1);
 			Loan loan2 = new Loan("Personal", 100000, List.of(6, 12, 24));
 			loanRepository.save(loan2);
-			Loan loan3 = new Loan("Automotriz", 300000, List.of(6, 12, 24, 36));
+			Loan loan3 = new Loan("Automotive", 300000, List.of(6, 12, 24, 36));
 			loanRepository.save(loan3);
 
 			Client client2 = new Client("Diego", "Perez", "diego@mindhub.com", passwordEnconder.encode("diego"));

@@ -14,7 +14,7 @@ a{
 }
 main{
     background-color: #f5eadb74;
-    min-height: 85vh;
+    min-height: 125vh;
     background-size:cover;
 	  background-attachment: fixed;
 	  background-image: url(./assets/login-bg.jpg);
@@ -45,9 +45,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    /* font-family: "Jost", sans-serif; */
-    /* background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); */
+    /* min-height: 100vh; */
   }
   .main {
     width: 350px;
@@ -122,6 +120,9 @@ body {
     border-radius: 60% / 10%;
     transform: translateY(-180px);
     transition: 0.8s ease-in-out;
+    display: block !important;
+    
+
   }
   .login label {
     color: #65481f;
@@ -338,5 +339,158 @@ footer{
     color: #65481f;
     text-align: center;
     padding: 2rem;
-}
+    display: block !important;
+  }
+
 /* FOOTER LOGOS */
+
+/* @import url(https://fonts.googleapis.com/css?family=Martel+Sans:200,300,400,800,900); */
+/* @import url(http://c-araujo.com/assets/fonts/starJedi/SE/style.css); */
+
+/* Mobile */
+@media (max-width: 424px) {
+  section {
+    height: 250px;
+  }
+  
+  section.head a {
+    width: 80%;
+    height: 50px;
+    line-height: 40px;
+    font-size: 1.5em;
+    margin-left: -40%;
+    margin-top: -20px;
+  }
+  
+  section.head a:before {
+    font-size: 20px;
+    top: -30px;
+    left: -10px;
+  }
+  
+  section.head a:after {
+    font-size: 20px;
+    bottom: -20px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 425px) and (max-width: 766px) {
+  section {
+    height: 300px;
+  }
+  
+  section.head a {
+    width: 50%;
+    height: 70px;
+    line-height: 56px;
+    font-size: 2em;
+    margin-left: -25%;
+    margin-top: -35px;
+  }
+  
+  section.head a:before {
+    font-size: 25px;
+    top: -40px;
+    left: -10px;
+  }
+  
+  section.head a:after {
+    font-size: 25px;
+    bottom: -30px;
+  }
+}
+  
+/* Desktop */
+@media (min-width: 767px) {
+  section {
+    height: 350px;
+  }
+  
+  section.head a {
+    width: 652px;
+    height: 94px;
+    line-height: 78px;
+    font-size: 3.875em;
+    margin-left: -326px;
+    margin-top: -39px;
+  }
+  
+  section.head a:before {
+    font-size: 30px;
+    top: -45px;
+    left: -5px;
+  }
+  
+  section.head a:after {
+    font-size: 30px;
+    bottom: -30px;
+  }
+}
+
+/* Global styles */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Martel Sans", sans-serif;
+  background-color: #000;
+}
+
+section {
+  width: 94%;
+  background-color: #000;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto 0px;
+}
+
+section a {
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 900;
+}
+
+section a:after,
+section a:before {
+  content: "";
+}
+
+section.head {
+  background-color: rgba(255, 255, 255, 0);
+  position: relative;
+  z-index: 10;
+}
+
+section.head a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+  -moz-transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+  transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+}
+
+section.head a:before,
+section.head a:after {
+  content: attr(data-bf);
+  color: #000;
+  font-weight: 900;
+  font-size: 30px;
+  text-transform: none;
+  display: block;
+  -webkit-transition: inherit;
+  -moz-transition: inherit;
+  transition: inherit;
+}

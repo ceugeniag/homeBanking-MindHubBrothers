@@ -32,13 +32,18 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST,"api/clients/current/accounts").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST,"api/clients/current/cards").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"api/transactions").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"api/loans").hasAuthority("CLIENT")
                 .antMatchers("/web/cards.html").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.js").hasAuthority("CLIENT")
                 .antMatchers("/web/cards.js").hasAuthority("CLIENT")
                 .antMatchers("/web/account.js").hasAuthority("CLIENT")
                 .antMatchers("/web/transfer.js").hasAuthority("CLIENT")
-                .antMatchers("/web/transfer.html").hasAuthority("CLIENT");
+                .antMatchers("/web/transfer.html").hasAuthority("CLIENT")
+                .antMatchers("/web/loan-application.js").hasAuthority("CLIENT")
+                .antMatchers("/web/loan-application.html").hasAuthority("CLIENT")
+        ;
 
         http.formLogin()
                 .usernameParameter("email")

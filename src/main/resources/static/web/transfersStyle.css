@@ -70,9 +70,20 @@ footer{
     cursor: pointer;
     transition: 0.5s ease-in-out;
   }
-  input, select {
+  input{
     width: 60%;
     height: 20px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+  }
+  select{
+    width: 60%;
     background: #e0dede;
     justify-content: center;
     display: flex;

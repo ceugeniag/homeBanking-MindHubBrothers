@@ -5,7 +5,6 @@ public class ClientLoanDTO {
     private long id;
     private double amount;
     private int payments;
-    private String name;
     private long loanId;
     private String loanName; //REVISAR
 
@@ -13,10 +12,9 @@ public class ClientLoanDTO {
     public ClientLoanDTO(ClientLoan clientLoan) {
         this.id= clientLoan.getId();
         this.loanId= clientLoan.getId();
-        this.name= clientLoan.getLoan().getName();
         this.amount = clientLoan.getAmount();
         this.payments = clientLoan.getPayments();
-        this.loanName= clientLoan.getLoan().getName(); //VER SI ESTA BIEN
+        this.loanName= clientLoan.getLoan().getName();
     }
 
     // GETTER
@@ -29,7 +27,7 @@ public class ClientLoanDTO {
     public int getPayments() {
         return payments;
     }
-    public String getName() { return name;}
+    public String getLoanName() { return loanName;}
     public long getLoanId() { return loanId; }
 
 }

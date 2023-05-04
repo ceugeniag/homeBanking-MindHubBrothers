@@ -10,7 +10,6 @@ const app = createApp ({
     },
     created(){
         this.loadData()
-        this.sorted(this.transactions)
     },
     methods:{
         loadData(){
@@ -25,15 +24,18 @@ const app = createApp ({
                 console.log(error);
             });
         },
-        sorted(){
-            if (this.transactions != "") {
-                return this.transactions.sort((a,b) => b.transactionsDate - a.transactionsDate)}         
-        },
         logout(){
             axios.post('/api/logout')
             .then(response=> console.log('signed out!!!'), (window.location.href = '/web/index.html'))
             .catch(error => console.log(error));
-        }
+        },
+        filteredTransactions() {
+            let today = new Date().toISOString().slice(0, 10);
+            return this.account.transactions
+              .filter(transaction => transaction.transactionDate.slice(0, 10) <= today)
+              .sort((a, b) => new Date(b.transactionDate) - new Date(a.transactionDate));
+          }
+          
     },
     })
 app.mount("#app")

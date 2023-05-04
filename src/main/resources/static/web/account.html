@@ -28,6 +28,7 @@
                         <h6 class="text-dark h4"><a href="./accounts.html" class="card-link">Accounts</a></h6>
                         <h6 class="text-dark h4"><a href="./account.html" class="card-link">Transactions</a></h6>
                         <h6 class="text-dark h4"><a href="./transfers.html">Transfers</a></h6>
+                        <h6 class="text-dark h4"><a href="./loan-application.html">Apply loans</a></h6>
                         <h6 class="text-dark h4"><a href="#">Get in Touch!</a></h6>
                         <h6 class="text-dark h4"><a href="./index.html">Log out</a></h6>
                     </div>
@@ -75,12 +76,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr :class="transaction.type" v-for="transaction of account.transactions" >
-                    <td>{{transaction.transactionDate.slice(0, 10)}} at {{transaction.transactionDate.slice(11, 16)}}hs.</td>
-                    <th scope="row">{{transaction.amount}}</th>
-                    <td>{{transaction.type}}</td>
-                    <td>{{transaction.description}}</td>
-                </tr>
+                    <tr :class="transaction.type" v-for="transaction in filteredTransactions()" :key="transaction.transactionId">
+                        <td>{{ transaction.transactionDate.slice(0, 10) }} at {{ transaction.transactionDate.slice(11, 16) }}hs.</td>
+                        <th scope="row">${{ transaction.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</th>
+                        <td>{{ transaction.type }}</td>
+                        <td>{{ transaction.description }}</td>
+                    </tr>
+                    
                 </tbody>
             </table>
         </div>

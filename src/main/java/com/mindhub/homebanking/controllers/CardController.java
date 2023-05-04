@@ -75,46 +75,5 @@ public class CardController {
         currentClient.addCard(card);
         clientRepository.save(currentClient);
         return new ResponseEntity<>("Congrats, you created a new card!", HttpStatus.CREATED);
-
-
-    /*@RequestMapping(path = "api/clients/current/cards", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCards(
-            @RequestParam CardType cardType,
-            @RequestParam ColorType colorType,
-            Authentication authentication){
-
-        Client currentClient = clientRepository.findByEmail(authentication.getName());
-        Set<Card> cards = currentClient.getCards().stream().filter(card -> card.getType()== cardType).collect(Collectors.toSet());
-
-
-        if(cards.size() >=3){
-            return new ResponseEntity<>("You cant have more than 3 cards", HttpStatus.FORBIDDEN);
-        }
-        if (currentClient.getCards().size() >= 6){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 6 cards");
-        }
-        if(cards.stream().anyMatch(card -> card.getColorType()== colorType)){
-            return new ResponseEntity<>("You cant have same card", HttpStatus.FORBIDDEN);
-        }
-
-        Random random = new Random();
-        int num1 = random.nextInt(9999);
-        int num2 = random.nextInt(9999);
-        int num3 = random.nextInt(9999);
-        int num4 = random.nextInt(9999);
-        String cardNumber = Integer.toString(num1) + " " + Integer.toString(num2) + " "+ Integer.toString(num3) + " "+ Integer.toString(num4) + " ";
-        int cvv = random.nextInt(999);
-
-        // ME FALTA DECIR QUE NO SE REPITA EL NUMERO COMPLETO Y QUE SE COMPLETE CON 0,
-        // problema para la Euge de mañana
-
-        Card newCard = new Card(currentClient.getFirstName()+ " " + currentClient.getLastName(), cardType, colorType, cardNumber, cvv, LocalDate.now(), LocalDate.now().plusYears(5), currentClient);
-        cardRepository.save(newCard);
-        currentClient.addCard(newCard);
-        clientRepository.save(currentClient);
-        return new ResponseEntity<>("Congrats, you created a new card!", HttpStatus.CREATED);
-    }*/
-
-
 }
 }

@@ -34,11 +34,42 @@ const app = createApp ({
             .then(response=> console.log('signed out!!!'), (window.location.href = '/web/index.html'))
             .catch(error => console.log(error))
         },
-        createAccount(){
-            axios.post('/api/clients/current/accounts')
-            .then(response=>console.log(response), (this.loadData()) (window.location.reload))
-            .catch(error => console.log(error));
-        }
+        createdAccount(){
+            Swal.fire({
+                icon: 'warning',
+                title: 'You are about to create a new account, are you sure?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, create it!',
+                cancelButtonText: 'Cancel',
+                timer: 6000,
+            })
+            .then((result) =>{
+                if(result.isConfirmed){
+                    axios.post('/api/clients/current/accounts')
+                    .then(response =>{
+                        if (response.status == "201"){
+                            this.createdAccount = true,
+                            this.loadData()
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'You have a new Account!',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Accepted',
+                                    cancelButtonText: 'Cancel',
+                                    timer: 6000,
+                                })
+                        }
+                    })
+                    .catch(error => Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: error.response.data,
+                                    timer: 6000,
+                                }))
+                            }
+                        })
+                    },
+    
     },
     
     })
