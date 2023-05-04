@@ -6,12 +6,10 @@ const app = createApp ({
             clients:[],
             accounts:[],
             valorID :(new URLSearchParams(location.search)).get("id"),
-            isOwnAccount: false,
             amount: '',
             description: '',
             numberAccountFrom:'',
             numberAccountTo:'',
-
         }
     },
     created(){
@@ -43,7 +41,7 @@ const app = createApp ({
             .post('/api/transactions', `amount=${this.amount}&description=${this.description}&numberAccountFrom=${this.numberAccountFrom}&numberAccountTo=${this.numberAccountTo}`, {
                 headers: { 'content-type': 'application/x-www-form-urlencoded' }
             })
-            .then(response => console.log('transfer'), (window.location.href = '/web/account.html'))
+            .then(response => console.log('transfer'), (window.location.href = '/web/accounts.html'))
             .catch(error => console.log(error))
         },
 

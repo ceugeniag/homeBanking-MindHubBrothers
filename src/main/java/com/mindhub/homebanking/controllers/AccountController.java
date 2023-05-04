@@ -22,7 +22,7 @@ public class AccountController {
     private ClientRepository clientRepository;
 
 
-    @RequestMapping ("api/accounts")
+    @RequestMapping ("api/clients/current/accounts")
     public List<AccountDTO> getAccount() {
         return accountRepository.findAll()
                 .stream()
@@ -30,7 +30,7 @@ public class AccountController {
                 .collect(toList());
     }
 
-    @RequestMapping("api/accounts/{id}")
+    @RequestMapping("api/clients/current/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
         Optional<Account> optionalAccount = accountRepository.findById(id);
         return optionalAccount.map(account -> new AccountDTO(account)).orElse(null);
