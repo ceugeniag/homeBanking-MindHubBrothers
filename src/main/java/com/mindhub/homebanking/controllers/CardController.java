@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 public class CardController {
@@ -28,32 +25,68 @@ public class CardController {
     @Autowired
     private ClientRepository clientRepository;
 
+    @RequestMapping(path = "/api/clients/current/cards", method = RequestMethod.POST) //CORREGIDO
+    public ResponseEntity<Object> createCard(
+            @RequestParam CardType cardType,
+            @RequestParam ColorType colorType,
+            Authentication authentication) {
 
-    @RequestMapping(path = "api/clients/current/cards", method = RequestMethod.POST)
+        // Obtener cliente autenticado
+        Client currentClient = clientRepository.findByEmail(authentication.getName());
+
+        // Verificar si el cliente ya tiene 3 tarjetas creadas del tipo a crear
+        long count = currentClient.getCards().stream()
+                .filter(card -> card.getType() == cardType)
+                .count();
+        if (count >= 3) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can't have more than 3 cards of this type");
+        }
+
+        // Verificar si el cliente ya tiene 6 tarjetas creadas en total
+        if (currentClient.getCards().size() >= 6) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have already created 6 cards");
+        }
+
+        // Verificar si el cliente ya tiene una tarjeta del mismo tipo y color
+        if (currentClient.getCards().stream()
+                .anyMatch(card -> card.getType() == cardType && card.getColorType() == colorType)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You already have a card of this type and color");
+        }
+
+        // Generar número de tarjeta aleatorio
+        String cardNumber;
+        Card existingCard;
+        do {
+            int num1 = (int) (Math.random() * 10000);
+            int num2 = (int) (Math.random() * 10000);
+            int num3 = (int) (Math.random() * 10000);
+            int num4 = (int) (Math.random() * 10000);
+            cardNumber = String.format("%04d-%04d-%04d-%04d", num1, num2, num3, num4);
+            existingCard = cardRepository.findByNumber(cardNumber);
+        } while (existingCard != null);
+
+        // Generar CVV aleatorio de 3 dígitos
+        int cvv = (int) (Math.random() * 1000);
+
+        // Crear tarjeta con los datos generados
+        String cardHolder = currentClient.getFirstName() + " " + currentClient.getLastName();
+        Card card = new Card(cardHolder, cardType, colorType, cardNumber, cvv, LocalDate.now(), LocalDate.now().plusYears(5), currentClient);
+        cardRepository.save(card);
+        currentClient.addCard(card);
+        clientRepository.save(currentClient);
+        return new ResponseEntity<>("Congrats, you created a new card!", HttpStatus.CREATED);
+
+
+    /*@RequestMapping(path = "api/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> createCards(
-            @RequestParam CardType cardType, @RequestParam ColorType colorType, Authentication authentication){
+            @RequestParam CardType cardType,
+            @RequestParam ColorType colorType,
+            Authentication authentication){
+
         Client currentClient = clientRepository.findByEmail(authentication.getName());
         Set<Card> cards = currentClient.getCards().stream().filter(card -> card.getType()== cardType).collect(Collectors.toSet());
 
-//        (cardType == CardType.DEBIT && colorType == colorType.SILVER )
-        /*if (currentClient.getCards().size() >= 6){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 6 cards");
-        }
-        if ((currentClient.getCards().stream().filter(card -> card.getColorType() == ColorType.SILVER). count() >= 2)||(currentClient.getCards().stream().filter(card -> card.getColorType() == ColorType.GOLD). count() >= 2)||(currentClient.getCards().stream().filter(card -> card.getColorType() == ColorType.TITANIUM). count() >= 2)){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 2 cards of that color");
-        }*/
-       /* if (currentClient.getCards().stream().filter(card -> card.getColorType() == ColorType.GOLD). count() >= 2){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 2 Gold cards");
-        }*/
-       /* if (currentClient.getCards().stream().filter(card -> card.getColorType() == ColorType.TITANIUM). count() >= 2){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 2 Titanium cards");
-        }*/
-        /*if ((currentClient.getCards().stream().filter(card -> card.getType() == CardType.DEBIT). count() >= 3)||(currentClient.getCards().stream().filter(card -> card.getType() == CardType.CREDIT). count() >= 3)){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 3 cards");
-        }*/
-        /*if (currentClient.getCards().stream().filter(card -> card.getType() == CardType.CREDIT). count() >= 3){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 3 credit cards");
-        }*/
+
         if(cards.size() >=3){
             return new ResponseEntity<>("You cant have more than 3 cards", HttpStatus.FORBIDDEN);
         }
@@ -80,7 +113,8 @@ public class CardController {
         currentClient.addCard(newCard);
         clientRepository.save(currentClient);
         return new ResponseEntity<>("Congrats, you created a new card!", HttpStatus.CREATED);
-    }
+    }*/
 
 
+}
 }

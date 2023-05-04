@@ -40,8 +40,10 @@ public class ClientController {
         }
     @RequestMapping(path = "api/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> register(
-            @RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password) {
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String email,
+            @RequestParam String password) {
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
@@ -50,8 +52,6 @@ public class ClientController {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
 
-        /*Random random= new Random();
-        int number = random.nextInt(999999);*/
         String accountNumber;
         do {
             int randomNumber = (int) (Math.random() * 99999999);

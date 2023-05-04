@@ -56,7 +56,7 @@ public class AccountController {
         accountRepository.save(newAccount);
         return new ResponseEntity<>("Created a new account!", HttpStatus.CREATED);
     }
-/*    @RequestMapping("/api/accounts")
+    /*@RequestMapping("/api/accounts")
     public List<AccountDTO> getCurrentClientAccount(Authentication authentication) {
         return accountRepository.findAll()
                 .stream()
