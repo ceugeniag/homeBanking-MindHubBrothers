@@ -6,6 +6,8 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.ColorType;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,12 @@ import java.time.LocalDate;
 public class CardController {
 
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
+    //private CardRepository cardRepository;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
+    //private ClientRepository clientRepository;
 
     @RequestMapping(path = "/api/clients/current/cards", method = RequestMethod.POST) //CORREGIDO
     public ResponseEntity<Object> createCard(
@@ -32,7 +36,7 @@ public class CardController {
             Authentication authentication) {
 
         // Obtener cliente autenticado
-        Client currentClient = clientRepository.findByEmail(authentication.getName());
+        Client currentClient = clientService.findByEmail(authentication.getName());
 
         // Verificar si el cliente ya tiene 3 tarjetas creadas del tipo a crear
         long count = currentClient.getCards().stream()
@@ -62,7 +66,7 @@ public class CardController {
             int num3 = (int) (Math.random() * 10000);
             int num4 = (int) (Math.random() * 10000);
             cardNumber = String.format("%04d-%04d-%04d-%04d", num1, num2, num3, num4);
-            existingCard = cardRepository.findByNumber(cardNumber);
+            existingCard = cardService.findByNumber(cardNumber);
         } while (existingCard != null);
 
         // Generar CVV aleatorio de 3 dígitos
@@ -71,9 +75,9 @@ public class CardController {
         // Crear tarjeta con los datos generados
         String cardHolder = currentClient.getFirstName() + " " + currentClient.getLastName();
         Card card = new Card(cardHolder, cardType, colorType, cardNumber, cvv, LocalDate.now(), LocalDate.now().plusYears(5), currentClient);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         currentClient.addCard(card);
-        clientRepository.save(currentClient);
+        clientService.saveClient(currentClient);
         return new ResponseEntity<>("Congrats, you created a new card!", HttpStatus.CREATED);
 }
 }

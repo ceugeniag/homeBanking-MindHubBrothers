@@ -5,6 +5,8 @@ import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,12 @@ import java.time.LocalDateTime;
 public class TransactionController {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
+    //private AccountRepository accountRepository;
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
+    //private TransactionRepository transactionRepository;
 
 
     @Transactional
@@ -40,12 +44,12 @@ public class TransactionController {
             return new ResponseEntity<>("These accounts are the same", HttpStatus.FORBIDDEN);
         }
 
-        Account accountFrom = accountRepository.findByNumber(numberAccountFrom);
+        Account accountFrom = accountService.findByNumber(numberAccountFrom);
         if (accountFrom == null) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-        Account accountTo = accountRepository.findByNumber(numberAccountTo);
+        Account accountTo = accountService.findByNumber(numberAccountTo);
         if (accountTo == null) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
@@ -72,10 +76,9 @@ public class TransactionController {
 
         accountFrom.setBalance(accountFrom.getBalance() - amount);
         accountTo.setBalance(accountTo.getBalance() + amount);
-        transactionRepository.save(transactionDebit);
-        transactionRepository.save(transactionCredit);
-        accountRepository.save(accountFrom);
-        accountRepository.save(accountTo);
+        transactionService.saveTransaction(transactionCredit);
+        accountService.saveAccount(accountFrom);
+        accountService.saveAccount(accountTo);
 
         return new ResponseEntity<>("Created!", HttpStatus.CREATED);
     }

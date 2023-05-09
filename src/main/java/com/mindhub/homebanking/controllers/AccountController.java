@@ -4,6 +4,8 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,29 +19,27 @@ import static java.util.stream.Collectors.toList;
 @RestController
 public class AccountController {
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
+    //private AccountRepository accountRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
+    //private ClientRepository clientRepository;
 
 
     @RequestMapping ("api/clients/current/accounts")
     public List<AccountDTO> getAccount() {
-        return accountRepository.findAll()
-                .stream()
-                .map(account -> new AccountDTO(account))
-                .collect(toList());
+        return accountService.getAccount();
     }
 
     @RequestMapping("api/clients/current/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
-        Optional<Account> optionalAccount = accountRepository.findById(id);
-        return optionalAccount.map(account -> new AccountDTO(account)).orElse(null);
+        return accountService.getAccountDTO(id);
     }
 
     @RequestMapping(path = "api/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> createAccount(Authentication authentication){
         // Obtener el cliente autenticado
-        Client currentClient = clientRepository.findByEmail(authentication.getName());
+        Client currentClient = clientService.findByEmail(authentication.getName());
 
         if (currentClient.getAccounts().size() >= 3) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 3 accounts");
@@ -49,19 +49,12 @@ public class AccountController {
         do {
         int randomNumber = (int) (Math.random() * 100000000);
         accountNumber = "VIN" + String.format("%08d", randomNumber);
-    } while (accountRepository.findByNumber(accountNumber) != null);
+    } while (accountService.findByNumber() != null);
 
         Account newAccount = new Account(accountNumber, LocalDateTime.now(),0);
         currentClient.addAccount(newAccount);
-        accountRepository.save(newAccount);
+        accountService.saveAccount(newAccount);
         return new ResponseEntity<>("Created a new account!", HttpStatus.CREATED);
     }
-    /*@RequestMapping("/api/accounts")
-    public List<AccountDTO> getCurrentClientAccount(Authentication authentication) {
-        return accountRepository.findAll()
-                .stream()
-                .map(account -> new AccountDTO(account))
-                .collect(toList());
-    }*/
 
     }

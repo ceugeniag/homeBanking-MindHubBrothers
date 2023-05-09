@@ -34,16 +34,9 @@ const app = createApp ({
                 showCancelButton: true,
                 confirmButtonText: 'Yes, create it!',
                 cancelButtonText: 'Cancel',
-                timer: 6000,
-            })
-            .then((result) =>{
-                if(result.isConfirmed){
-                    axios.post('/api/clients/current/accounts')
-                    .then(response =>{
-                        if (response.status == "201"){
-                            axios.post('/api/clients/current/cards',`cardType=${this.cardType}&colorType=${this.colorType}`)
-                            this.createCard = true,
-                            this.loadData()
+                preConfirm: () => {
+                    return axios.post('/api/clients/current/cards',`cardType=${this.cardType}&colorType=${this.colorType}`)
+                    .then ( response => 
                             Swal.fire({
                                     icon: 'success',
                                     title: 'You have a new Card!',
@@ -51,19 +44,38 @@ const app = createApp ({
                                     confirmButtonText: 'Accepted',
                                     cancelButtonText: 'Cancel',
                                     timer: 6000,
-                                })
-                             (window.location.href = '/web/cards.html')
-                        }
-                    })
-                .catch(error=>
+                                }) .then(()=> window.location.href = '/web/cards.html')
+                            
+                ).catch(error=>
                     Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: error.response.data,
                     timer: 6000,
-                }));
+                }))}
+            })
+            // .then((result) =>{
+            //     if(result.isConfirmed){
+            //         axios.post('/api/clients/current/accounts')
+            //         .then(response =>{
+            //             if (response.status == "201"){
+            //                 axios.post('/api/clients/current/cards',`cardType=${this.cardType}&colorType=${this.colorType}`)
+            //                 this.createCard = true,
+            //                 this.loadData()
+            //                 Swal.fire({
+            //                         icon: 'success',
+            //                         title: 'You have a new Card!',
+            //                         showCancelButton: true,
+            //                         confirmButtonText: 'Accepted',
+            //                         cancelButtonText: 'Cancel',
+            //                         timer: 6000,
+            //                     })
+            //                  (window.location.href = '/web/cards.html')
+            //             }
+            //         })
+                
         }
-        })
+        
     },
         logout(){
             axios.post('/api/logout')
@@ -72,6 +84,6 @@ const app = createApp ({
         }
     },
     
-    })
+    )
 app.mount("#app")
 
