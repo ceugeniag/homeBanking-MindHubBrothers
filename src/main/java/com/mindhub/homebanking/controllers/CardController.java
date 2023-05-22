@@ -12,24 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 public class CardController {
 
     @Autowired
     private CardService cardService;
-    //private CardRepository cardRepository;
-
     @Autowired
     private ClientService clientService;
-    //private ClientRepository clientRepository;
-
-    @RequestMapping(path = "/api/clients/current/cards", method = RequestMethod.POST) //CORREGIDO
+    @PostMapping(path = "/api/clients/current/cards")
     public ResponseEntity<Object> createCard(
             @RequestParam CardType cardType,
             @RequestParam ColorType colorType,
@@ -74,10 +69,28 @@ public class CardController {
 
         // Crear tarjeta con los datos generados
         String cardHolder = currentClient.getFirstName() + " " + currentClient.getLastName();
-        Card card = new Card(cardHolder, cardType, colorType, cardNumber, cvv, LocalDate.now(), LocalDate.now().plusYears(5), currentClient);
+        Card card = new Card(cardHolder, cardType, colorType, cardNumber, cvv, LocalDateTime.now(), LocalDateTime.now().plusYears(5), currentClient, true);
         cardService.saveCard(card);
         currentClient.addCard(card);
         clientService.saveClient(currentClient);
         return new ResponseEntity<>("Congrats, you created a new card!", HttpStatus.CREATED);
 }
+
+//Eliminar tarjetas:
+    @PutMapping("api/clients/current/cards") //Este endpoint?
+    public ResponseEntity<Object> deleteCards (@RequestParam String number, Authentication authentication){
+        //Verifico si el cliente existe
+        Client currentClient = clientService.findByEmail(authentication.getName());
+        Card card = cardService.findByNumber(number);
+        if (card == null){
+            return new ResponseEntity<>("This card doesn't exist", HttpStatus.FORBIDDEN);
+        }
+        if (card.getClient().getId() != (currentClient.getId())){
+            return new ResponseEntity<>("This card doesn't belong to you", HttpStatus.FORBIDDEN);
+        }
+        card.setActive(false);
+        cardService.saveCard(card);
+        return new ResponseEntity<>("Card deleted successfully", HttpStatus.ACCEPTED);
+
+    }
 }

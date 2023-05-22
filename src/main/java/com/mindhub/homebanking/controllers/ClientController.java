@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.AccountRepository;
@@ -30,15 +31,15 @@ public class ClientController {
     private AccountService accountService;
     //private  AccountRepository accountRepository;
 
-    @RequestMapping("/api/clients")
+    @GetMapping("/api/clients")
     public List<ClientDTO> getClient() {
         return clientService.getClient();
     }
-    @RequestMapping("api/clients/{id}")
+    @GetMapping("api/clients/{id}")
         public ClientDTO getClient(@PathVariable Long id){
             return clientService.getClientDTO(id);
         }
-    @RequestMapping(path = "api/clients", method = RequestMethod.POST)
+    @PostMapping(path = "api/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName,
             @RequestParam String lastName,
@@ -55,17 +56,17 @@ public class ClientController {
         do {
             int randomNumber = (int) (Math.random() * 99999999);
             accountNumber = "VIN" + String.format("%08d", randomNumber);
-        } while (accountService.findByNumber() != null);
+        } while (accountService.findByNumber(accountNumber) != null);
 
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        Account newAccount = new Account(accountNumber, LocalDateTime.now(),0);
+        Account newAccount = new Account(accountNumber, LocalDateTime.now(),0, true, AccountType.SAVINGS);
         clientService.saveClient(newClient);
         newClient.addAccount(newAccount);
         accountService.saveAccount(newAccount);
         return new ResponseEntity<>("Welcome new client!", HttpStatus.CREATED);
     }
 
-    @RequestMapping("/api/clients/current")
+    @GetMapping("/api/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication) {
         return clientService.getCurrentClient(authentication);
     }

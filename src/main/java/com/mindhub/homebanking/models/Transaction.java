@@ -16,6 +16,9 @@ public class Transaction {
     private double amount;
     private String description;
     private LocalDateTime transactionDate;
+    private double balance;
+    private LocalDateTime date;
+
 
     //ASOCIACION
     @ManyToOne(fetch = FetchType.EAGER)
@@ -24,11 +27,13 @@ public class Transaction {
 
     //CONSTRUCTOR
     public Transaction() { }
-    public Transaction(TransactionType type, double amount, String description, LocalDateTime transactionDate) {
+    public Transaction(TransactionType type, double amount, String description, LocalDateTime transactionDate, double balance, LocalDateTime date) {
         this.type = type;
         this.amount = amount;
         this.description = description;
         this.transactionDate = transactionDate;
+        this.balance = balance;
+        this.date = date;
     }
 
     //GETTER Y SETTER
@@ -58,14 +63,29 @@ public class Transaction {
     public void setDescription(String description) {
         this.description = description;
     }
-    public LocalDateTime getCreationDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.transactionDate = creationDate;
+    public void setTransactionDate(LocalDateTime transactionDate) {
+        this.transactionDate = transactionDate;
     }
     public long getId() {
         return id;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
 }

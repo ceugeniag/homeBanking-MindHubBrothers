@@ -59,7 +59,6 @@
             <span class="visually-hidden">Next</span>
             </button>
         </div>
-
         <div class="m-2 p-2">
         <h2 class="titule" style="text-align: center;"> Account: </h2>
         <h3 class="titule" style="text-align: center;">{{account.number}}</h3>
@@ -72,16 +71,18 @@
                     <th scope="col">Amount</th>
                     <th scope="col">Type</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Balance</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr :class="transaction.type" v-for="transaction in filteredTransactions()" :key="transaction.transactionId">
                         <td>{{ transaction.transactionDate.slice(0, 10) }} at {{ transaction.transactionDate.slice(11, 16) }}hs.</td>
+                        <!-- <td>{{ transaction.transactionDate.toLocalDate() }} at {{ transaction.transactionDate.toLocalTime().toString().slice(0, 5) }}hs.</td> -->
                         <th scope="row">${{ transaction.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</th>
                         <td>{{ transaction.type }}</td>
                         <td>{{ transaction.description }}</td>
+                        <td>${{transaction.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}}</td>
                     </tr>
-                    
                 </tbody>
             </table>
         </div>

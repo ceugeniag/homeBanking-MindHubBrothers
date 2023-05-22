@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -25,36 +26,60 @@ public class AccountController {
     private ClientService clientService;
     //private ClientRepository clientRepository;
 
-
-    @RequestMapping ("api/clients/current/accounts")
+    @GetMapping ("api/clients/current/accounts")
     public List<AccountDTO> getAccount() {
         return accountService.getAccount();
     }
 
-    @RequestMapping("api/clients/current/accounts/{id}")
+    @GetMapping("api/clients/current/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
         return accountService.getAccountDTO(id);
     }
 
-    @RequestMapping(path = "api/clients/current/accounts", method = RequestMethod.POST)
-    public ResponseEntity<Object> createAccount(Authentication authentication){
+    @PostMapping(path = "api/clients/current/accounts")
+    public ResponseEntity<Object> createAccount(@RequestParam AccountType accountType, Authentication authentication){
         // Obtener el cliente autenticado
         Client currentClient = clientService.findByEmail(authentication.getName());
+        int activeAccountsCount = 0;
 
+
+        for (Account account : currentClient.getAccounts()) {
+            if (account.isActive()) {
+                activeAccountsCount++;
+            }
+        }
         if (currentClient.getAccounts().size() >= 3) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have alredy 3 accounts");
         }
-
         String accountNumber;
         do {
         int randomNumber = (int) (Math.random() * 100000000);
         accountNumber = "VIN" + String.format("%08d", randomNumber);
-    } while (accountService.findByNumber() != null);
+    } while (accountService.findByNumber(accountNumber) != null);
 
-        Account newAccount = new Account(accountNumber, LocalDateTime.now(),0);
+        Account newAccount = new Account(accountNumber, LocalDateTime.now(),0, true, accountType);
         currentClient.addAccount(newAccount);
         accountService.saveAccount(newAccount);
         return new ResponseEntity<>("Created a new account!", HttpStatus.CREATED);
     }
 
+    //Elimino cuentas:
+    @PutMapping("/api/clients/current/accounts")
+    public ResponseEntity<Object> deleteAccount(@RequestParam long id, Authentication authentication) {
+        // Verificando si existe
+        Client currentClient = clientService.findByEmail(authentication.getName());
+        Account account = accountService.findById(id);
+        if (account == null) {
+            return new ResponseEntity<>("This account doesn't exist", HttpStatus.FORBIDDEN);
+        }
+        if (account.getClient().getId() != (currentClient.getId())) {
+            return new ResponseEntity<>("This account doesn't belong to you", HttpStatus.FORBIDDEN);
+        }
+        // Eliminar la cuenta
+        account.setActive(false);
+        accountService.saveAccount(account);
+        return new ResponseEntity<>("Account deleted successfully", HttpStatus.ACCEPTED);
     }
+    //Me falta eliminar las transacciones
+
+}

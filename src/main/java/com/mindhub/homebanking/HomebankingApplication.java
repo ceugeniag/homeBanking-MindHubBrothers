@@ -15,77 +15,84 @@ import java.util.List;
 @SpringBootApplication
 public class HomebankingApplication {
 
-/*	@Autowired
-	private PasswordEncoder passwordEnconder;*/
+	@Autowired
+	private PasswordEncoder passwordEnconder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
 
-	/*@Bean
+	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("melba"));
 			clientRepository.save(client1);
-			Account account1= new Account("VIN001", LocalDateTime.now(), 5000.00);
+			Account account1= new Account("VIN001", LocalDateTime.now(), 5000.00, true, AccountType.CHECKING);
 			client1.addAccount(account1);
-			Account account2= new Account("VIN002", LocalDateTime.now().plusDays(1), 7500.00);
+			Account account2= new Account("VIN002", LocalDateTime.now().plusDays(1), 7500.00, true,AccountType.SAVINGS);
 
 			client1.addAccount(account2);
 			accountRepository.save(account1);
 			accountRepository.save(account2);
 			clientRepository.save(client1);
 
-			Transaction transaction1= new Transaction(TransactionType.CREDIT, 500.00, "Salary",LocalDateTime.now());
+			Transaction transaction1= new Transaction(TransactionType.CREDIT, 500.00, "Salary",LocalDateTime.now(), account1.getBalance(), LocalDateTime.now());
 			transactionRepository.save(transaction1);
 			account1.addTransactions(transaction1);
 			accountRepository.save(account1);
 
-			Transaction transaction2= new Transaction(TransactionType.DEBIT,-50.00, "Bakery",LocalDateTime.now());
+			Transaction transaction2= new Transaction(TransactionType.DEBIT,-50.00, "Bakery",LocalDateTime.now(), account2.getBalance(), LocalDateTime.now());
 			transactionRepository.save(transaction2);
 			account2.addTransactions(transaction2);
 			accountRepository.save(account2);
 			transactionRepository.save(transaction1);
 			transactionRepository.save(transaction2);
 
-			Transaction transaction3= new Transaction(TransactionType.DEBIT,-150.00, "Hotel",LocalDateTime.now());
+			account2.setBalance(account2.getBalance()-150.00);
+			accountRepository.save(account2);
+
+			Transaction transaction3= new Transaction(TransactionType.DEBIT,-150.00, "Hotel",LocalDateTime.now(), account2.getBalance(), LocalDateTime.now());
 			transactionRepository.save(transaction3);
 			account2.addTransactions(transaction3);
 			accountRepository.save(account2);
 			transactionRepository.save(transaction3);
 
-			Transaction transaction4= new Transaction(TransactionType.CREDIT,256.10, "Transfer",LocalDateTime.now());
+			account2.setBalance(account2.getBalance()+256.10);
+			accountRepository.save(account2);
+			Transaction transaction4= new Transaction(TransactionType.CREDIT,256.10, "Transfer",LocalDateTime.now(), account2.getBalance(), LocalDateTime.now());
 			transactionRepository.save(transaction4);
 			account2.addTransactions(transaction4);
 			accountRepository.save(account2);
 			transactionRepository.save(transaction4);
 
-			Transaction transaction5= new Transaction(TransactionType.DEBIT,-50.10, "Transfer",LocalDateTime.now());
-			transactionRepository.save(transaction5);
+
+			account1.setBalance(account1.getBalance()-50.10);
+			accountRepository.save(account1);
+			Transaction transaction5= new Transaction(TransactionType.DEBIT,-50.10, "Transfer",LocalDateTime.now(), account1.getBalance(), LocalDateTime.now());
 			account1.addTransactions(transaction5);
 			accountRepository.save(account1);
-			transactionRepository.save(transaction4);
+			transactionRepository.save(transaction5);
 
-			Loan loan1 = new Loan("Mortgage", 500000, List.of(12,24,36,48,60));
+			Loan loan1 = new Loan("Mortgage", 500000, List.of(12,24,36,48,60), 0.2);
 			loanRepository.save(loan1);
-			Loan loan2 = new Loan("Personal", 100000, List.of(6, 12, 24));
+			Loan loan2 = new Loan("Personal", 100000, List.of(6, 12, 24),0.6);
 			loanRepository.save(loan2);
-			Loan loan3 = new Loan("Automotive", 300000, List.of(6, 12, 24, 36));
+			Loan loan3 = new Loan("Automotive", 300000, List.of(6, 12, 24, 36),0.4);
 			loanRepository.save(loan3);
 
 			Client client2 = new Client("Diego", "Perez", "diego@mindhub.com", passwordEnconder.encode("diego"));
-			Account account4= new Account("VIN003", LocalDateTime.now(), 5600.00);
+			Account account4= new Account("VIN003", LocalDateTime.now(), 5600.00, true, AccountType.CHECKING);
 			client2.addAccount(account4);
 			clientRepository.save(client2);
 
-			ClientLoan clientLoan1 = new ClientLoan(400000, 60);
+			ClientLoan clientLoan1 = new ClientLoan(400000, 60,480000 );
 			clientLoanRepository.save(clientLoan1);
-			ClientLoan clientLoan2 = new ClientLoan(50000, 12);
+			ClientLoan clientLoan2 = new ClientLoan(50000, 12, 80000);
 			clientLoanRepository.save(clientLoan2);
-			ClientLoan clientLoan3 = new ClientLoan(100000, 24);
+			ClientLoan clientLoan3 = new ClientLoan(100000, 24, 160000);
 			clientLoanRepository.save(clientLoan3);
-			ClientLoan clientLoan4 = new ClientLoan(200000, 36);
+			ClientLoan clientLoan4 = new ClientLoan(200000, 36, 280000);
 			clientLoanRepository.save(clientLoan4);
 			client1.addClientLoan(clientLoan1);
 			client1.addClientLoan(clientLoan2);
@@ -115,18 +122,18 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan4);
 
 			Client client3 = new Client("Amelia", "Perez", "amelia@mindhub.com", passwordEnconder.encode("amelia"));
-			Account account3= new Account("VIN003", LocalDateTime.now(), 10000.00);
+			Account account3= new Account("VIN003", LocalDateTime.now(), 10000.00, true, AccountType.SAVINGS);
 			accountRepository.save(account3);
 			client3.addAccount(account3);
 			clientRepository.save(client3);
 
-			Card card1 = new Card(client1.getFirstName()+ " " + client1.getLastName(), CardType.DEBIT, ColorType.GOLD, "0001 0001 0001 0001", 111, LocalDate.now(), LocalDate.now().plusYears(5), client1);
+			Card card1 = new Card(client1.getFirstName()+ " " + client1.getLastName(), CardType.DEBIT, ColorType.GOLD, "0001 0001 0001 0001", 111, LocalDateTime.now().minusYears(5), LocalDateTime.now().minusDays(1), client1, true);
 			cardRepository.save(card1);
 			client1.addCard(card1);
-			Card card2 = new Card(client1.getFirstName()+ " " + client1.getLastName(), CardType.CREDIT, ColorType.TITANIUM, "1000 1000 1000 1000", 100, LocalDate.now(), LocalDate.now().plusYears(5), client1);
+			Card card2 = new Card(client1.getFirstName()+ " " + client1.getLastName(), CardType.CREDIT, ColorType.TITANIUM, "1000 1000 1000 1000", 100, LocalDateTime.now(), LocalDateTime.now().plusYears(5), client1, true);
 			cardRepository.save(card2);
 			client1.addCard(card2);
-			Card card3 = new Card(client2.getFirstName()+ " " + client2.getLastName(), CardType.CREDIT, ColorType.SILVER, "1001 1001 1001 1001", 101, LocalDate.now(), LocalDate.now().plusYears(5), client2);
+			Card card3 = new Card(client2.getFirstName()+ " " + client2.getLastName(), CardType.CREDIT, ColorType.SILVER, "1001 1001 1001 1001", 101, LocalDateTime.now(), LocalDateTime.now().plusYears(5), client2, true);
 			cardRepository.save(card3);
 			client2.addCard(card3);
 			clientRepository.save(client1);
@@ -134,10 +141,11 @@ public class HomebankingApplication {
 			Client client4 = new Client("admin", "admin", "admin@admin.com", passwordEnconder.encode("admin"));
 			clientRepository.save(client4);
 
-			Account account5 = new Account("VIN006", LocalDateTime.now(), 150);
+			Account account5 = new Account("VIN006", LocalDateTime.now(), 150, true, AccountType.CHECKING);
 			client2.addAccount(account5);
 			clientRepository.save(client2);
 		};
-	*/
 
+
+}
 }

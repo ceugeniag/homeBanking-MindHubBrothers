@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Card {
@@ -15,9 +16,10 @@ public class Card {
     private CardType type;
     private ColorType colorType;
     private String number;
-    private double cvv;
-    private LocalDate fromDate;
-    private LocalDate thruDate;
+    private int cvv;
+    private LocalDateTime fromDate;
+    private LocalDateTime thruDate;
+    private boolean active;
 
     //ASOCIACION
     @ManyToOne(fetch = FetchType.EAGER)
@@ -28,7 +30,7 @@ public class Card {
     //CONSTRUCTOR
     public Card() {};
 
-    public Card(String cardholder, CardType type, ColorType colorType, String number, double cvv, LocalDate fromDate, LocalDate thruDate, Client client) {
+    public Card(String cardholder, CardType type, ColorType colorType, String number, int cvv, LocalDateTime fromDate, LocalDateTime thruDate, Client client, boolean active) {
         this.cardholder = cardholder;
         this.type = type;
         this.colorType = colorType;
@@ -37,6 +39,7 @@ public class Card {
         this.fromDate = fromDate;
         this.thruDate = thruDate;
         this.client = client;
+        this.active = active;
     }
 
 
@@ -51,13 +54,20 @@ public class Card {
     public void setColorType(ColorType colorType) {this.colorType = colorType;}
     public String getNumber() {return number;}
     public void setNumber(String number) {this.number = number;}
-    public double getCvv() {return cvv;}
-    public void setCvv(double cvv) {this.cvv = cvv;}
-    public LocalDate getFromDate() {return fromDate;}
-    public void setFromDate(LocalDate fromDate) {this.fromDate = fromDate;}
-    public LocalDate getThruDate() {return thruDate;}
-    public void setThruDate(LocalDate thruDate) {this.thruDate = thruDate;}
+    public int getCvv() {return cvv;}
+    public void setCvv(int cvv) {this.cvv = cvv;}
+    public LocalDateTime getFromDate() {return fromDate;}
+    public void setFromDate(LocalDateTime fromDate) {this.fromDate = fromDate;}
+    public LocalDateTime getThruDate() {return thruDate;}
+    public void setThruDate(LocalDateTime thruDate) {this.thruDate = thruDate;}
     public Client getClient() {return client;}
     public void setClient(Client client) {this.client = client;}
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

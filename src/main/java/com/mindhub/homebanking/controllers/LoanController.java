@@ -5,18 +5,12 @@ import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
-import com.mindhub.homebanking.services.AccountService;
-import com.mindhub.homebanking.services.ClientService;
-import com.mindhub.homebanking.services.LoanService;
-import com.mindhub.homebanking.services.TransactionService;
+import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -39,16 +33,20 @@ public class LoanController {
     @Autowired
     private TransactionService transactionService;
 
+    @Autowired
+    private ClientLoanService clientLoanService;
 
-    @RequestMapping("/api/loans")
+
+    @GetMapping("/api/loans")
     public List<LoanDTO> getLoans() {
         return loanService.getLoans();
     }
 
     @Transactional
-    @RequestMapping(path = "/api/loans", method = RequestMethod.POST)
-    public ResponseEntity<String> addLoan(
+    @PostMapping(path = "/api/loans")
+    public ResponseEntity<Object> addLoan(
             @RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication){
+
 
         if (loanApplicationDTO.getLoanId()<= 0) {
             return new ResponseEntity<>("The id must be more than 0", HttpStatus.FORBIDDEN);
@@ -59,7 +57,7 @@ public class LoanController {
         if (loanApplicationDTO.getAmount()<= 0){
          return new ResponseEntity<>("The amount must be more than 0", HttpStatus.FORBIDDEN);
         }
-        Loan loan = loanService.findById(loanApplicationDTO.getLoanId()); // ??
+        Loan loan = loanService.findById(loanApplicationDTO.getLoanId());
         if (loan == null){
          return new ResponseEntity<>("This loan doesn't exist", HttpStatus.FORBIDDEN);
         }
@@ -72,43 +70,101 @@ public class LoanController {
      }
 
         Client currentClient = clientService.findByEmail(authentication.getName());
-        String numberAccountDestiny = loanApplicationDTO.getNumberAccountDestiny(); //Creo elnumero de cuenta
-        Account accountDestiny = accountService.findByNumber(numberAccountDestiny); //lo busco en el repo
-
+        String numberAccountDestiny = loanApplicationDTO.getNumberAccountDestiny();
+        Account accountDestiny = accountService.findByNumber(numberAccountDestiny);
         if (!accountDestiny.getClient().equals(currentClient)) {
             return new ResponseEntity<>("This account does not belong to you", HttpStatus.FORBIDDEN);
         }
             if (accountDestiny == null) {
                 return new ResponseEntity<>("This account doesn't exist", HttpStatus.FORBIDDEN);
             }
-        /*Loan existingLoan = loanRepository.findById(loanApplicationDTO.getLoanId());
-        if (existingLoan.getId() == loanApplicationDTO.getLoanId()) {
-            return new ResponseEntity<>("You already have a loan with this id", HttpStatus.FORBIDDEN);
-        }*/
 
-            double loanAmountWithInterest = loanApplicationDTO.getAmount() * 1.2; //INTERES BASE del 20%
-            int numMonthlyPayments = loanApplicationDTO.getPayments(); // Aca guardo la cantidad de cuotas que voy a realizar
-
-            //INTERESES MENSUALES
-            double monthlyInterest = 0.02; //INTERES MENSUAL del 2%
-            double monthlyPayment = loanAmountWithInterest / numMonthlyPayments * monthlyInterest; //Valor mensual de cuota
-
+        accountDestiny.setBalance(accountDestiny.getBalance() + loanApplicationDTO.getAmount());
 
             Transaction loanTransactioncredit = new Transaction();
             loanTransactioncredit.setType(TransactionType.CREDIT);
             loanTransactioncredit.setDescription(loan.getName() + " - loan approved");
-            loanTransactioncredit.setCreationDate(LocalDateTime.now());
+            loanTransactioncredit.setTransactionDate(LocalDateTime.now());
             loanTransactioncredit.setAmount((loanApplicationDTO.getAmount()));
             loanTransactioncredit.setAccount(accountDestiny);
             transactionService.saveTransaction(loanTransactioncredit);
-            accountDestiny.setBalance(accountDestiny.getBalance() + loanTransactioncredit.getAmount());
             accountService.saveAccount(accountDestiny);
+            loanTransactioncredit.setBalance(accountDestiny.getBalance());
 
-            ClientLoan clientLoan = new ClientLoan((monthlyPayment*numMonthlyPayments), loanApplicationDTO.getPayments());
+            ClientLoan clientLoan = new ClientLoan( loanApplicationDTO.getAmount(), loanApplicationDTO.getPayments(), loanApplicationDTO.getAmount() * loan.getInterest());
             currentClient.addClientLoan(clientLoan);
             loan.addClientLoan(clientLoan);
             clientLoanRepository.save(clientLoan);
 
         return new ResponseEntity<>("Great! You just acquired a new loan", HttpStatus.CREATED);
     }
+
+    @PostMapping("api/loans/manager")
+    public ResponseEntity<Object> addLoanAdmin(@RequestBody Loan loan){
+        if (loan.getName().isBlank()){
+            return new ResponseEntity<>("You need to add the name of the loan", HttpStatus.FORBIDDEN);
+        }
+        if (loan.getPayments().size() <= 0){
+            return new ResponseEntity<>("You need to add a value amount of payments", HttpStatus.FORBIDDEN);
+        }
+        if (loan.getMaxAmount()< 1){
+            return new ResponseEntity<>("You have to enter more amount than 1", HttpStatus.FORBIDDEN);
+        }
+        if (loan.getInterest()<1){
+            return new ResponseEntity<>("You have to enter a valid interest", HttpStatus.FORBIDDEN);
+        }
+
+        Loan managerLoan = new Loan(loan.getName(), loan.getMaxAmount(), loan.getPayments(), loan.getInterest());
+        loanService.saveLoan(managerLoan);
+
+        return new ResponseEntity<>("Great! You just acquired a new loan", HttpStatus.CREATED);
+    }
+
+    @Transactional
+    @PostMapping("api/current/loans")
+    public ResponseEntity<Object> loanPayment(Authentication authentication , @RequestParam long idLoan , @RequestParam String account, @RequestParam double amount) {
+
+        Client currentClient = clientService.findByEmail(authentication.getName());
+        ClientLoan clientLoan = clientLoanService.getClientLoan(idLoan);
+        Loan loan = loanService.findById(idLoan);
+        Account accountAuthenticated = accountService.getAccountAuthenticated(account);
+        String description = "You made a payment on your "+ clientLoan.getLoan().getName() + "loan";
+
+        if( clientLoan == null ){
+            return new ResponseEntity<>("This loan doesn't exist", HttpStatus.FORBIDDEN);
+        }
+        if( currentClient == null){
+            return new ResponseEntity<>("You are not registered as a client", HttpStatus.FORBIDDEN);
+        }
+        if( clientLoan.getFinalAmount() == 0 ){
+            return new ResponseEntity<>("This loan is already paid", HttpStatus.FORBIDDEN);
+        }
+        if ( account.isBlank() ){
+            return new ResponseEntity<>("PLease enter an account", HttpStatus.FORBIDDEN);
+        }
+        if ( currentClient.getAccounts().stream().filter(accounts -> accounts.getNumber().equalsIgnoreCase(account)).collect(toList()).size() == 0 ){
+            return new ResponseEntity<>("This account is not yours.", HttpStatus.FORBIDDEN);}
+
+        if ( amount < 1 ){
+            return new ResponseEntity<>("PLease enter an amount bigger than 0", HttpStatus.FORBIDDEN);
+        }
+        if ( accountAuthenticated.getBalance() < amount ){
+            return new ResponseEntity<>("Insufficient balance in your account " + accountAuthenticated.getNumber(), HttpStatus.FORBIDDEN);}
+
+        accountAuthenticated.setBalance( accountAuthenticated.getBalance() - amount );
+        clientLoan.setFinalAmount( clientLoan.getFinalAmount() - amount);
+
+        Transaction newTransaction = new Transaction(TransactionType.DEBIT, amount, description , LocalDateTime.now() , accountAuthenticated.getBalance(),  LocalDateTime.now() );
+        accountAuthenticated.addTransactions(newTransaction);
+        transactionService.saveTransaction(newTransaction);
+
+        if ( amount < clientLoan.getFinalAmount() ){
+            clientLoan.setPayments(clientLoan.getPayments() - 1 );
+        } else {
+            clientLoan.setPayments(0);
+        }
+
+        return new ResponseEntity<>("Great! You just made a payment on your loan", HttpStatus.CREATED);
+    }
+
 }

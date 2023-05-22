@@ -10,6 +10,7 @@ public class ClientLoan {
     private long id;
     private double amount;
     private int payments;
+    private double finalAmount;
 
 
     //ASOCIACION
@@ -25,9 +26,10 @@ public class ClientLoan {
     //CONSTRUCTOR
     public ClientLoan(){};
 
-    public ClientLoan(double amount, int payments){
+    public ClientLoan(double amount, int payments, double finalAmount){
         this.amount=amount;
         this.payments=payments;
+        this.finalAmount=finalAmount;
     }
 
 
@@ -52,4 +54,11 @@ public class ClientLoan {
         this.loan = loan;
     }
 
+    public double getFinalAmount() {
+        return finalAmount;
+    }
+
+    public void setFinalAmount(double finalAmount) {
+        this.finalAmount = finalAmount;
+    }
 }

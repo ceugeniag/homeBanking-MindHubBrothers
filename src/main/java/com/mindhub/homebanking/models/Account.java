@@ -15,6 +15,8 @@ public class Account {
     private String number;
     private LocalDateTime creationDate;
     private double balance;
+    private boolean active;
+    private AccountType accountType;
 
     //ASOCIACION
     @ManyToOne(fetch = FetchType.EAGER)
@@ -27,10 +29,12 @@ public class Account {
 
     //CONSTRUCTORES
     public Account (){ };
-    public Account(String number, LocalDateTime creationDate, double balance){
+    public Account(String number, LocalDateTime creationDate, double balance, boolean active, AccountType accountType){
         this.number= number;
         this.creationDate= creationDate;
         this.balance=balance;
+        this.active=active;
+        this.accountType=accountType;
     }
 
     //GETTER Y SETTER
@@ -64,6 +68,21 @@ public class Account {
         return transactions;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
 
     //METODOS
     public void addTransactions(Transaction transaction) {
