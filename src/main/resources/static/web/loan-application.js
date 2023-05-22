@@ -51,6 +51,29 @@ const app = createApp ({
                 })
             .catch(error=> console.log(error))
         },
+<<<<<<< HEAD
+=======
+        // loanApply(){
+        //     console.log(this.selectedLoan)
+        //     console.log(this.amount)
+        //     console.log(this.selectedPayment)
+        //     console.log(this.numberAccountDestiny)
+        //     axios.post('/api/loans', {
+        //         loanId: this.selectedLoan,
+        //         amount: this.amount,
+        //         payments: this.selectedPayment,
+        //         numberAccountDestiny: this.numberAccountDestiny,
+        //     })
+        //     .then(response => {
+        //         console.log(response.data)
+        //     })
+        //     .catch(error => Swal.fire({
+        //         icon: 'error',
+        //         text: error.response.data,
+        //             }))
+        // },
+
+>>>>>>> homeBanking-MindHubBrothers/master
         loanApply() {
             Swal.fire({
               title: ' Apply loan',
@@ -95,6 +118,7 @@ const app = createApp ({
           },
           
         calculateLoanTotal(amount) {
+<<<<<<< HEAD
             const total = ((((amount * (1.2))/this.selectedPayment)*0,02)*this.selectedPayment);
             return total.toFixed(2);
         },
@@ -102,6 +126,14 @@ const app = createApp ({
             const selectedPayment = this.selectedPayment;
             const amount = this.amount;
             const total = this.calculateLoanTotal(amount, selectedPayment);
+=======
+            const total = amount * (1.2);
+            return total.toFixed(2);
+        },
+        updateTotalPrice() {
+            const amount = this.amount;
+            const total = this.calculateLoanTotal(amount);
+>>>>>>> homeBanking-MindHubBrothers/master
             this.totalLoanPrice = total;
           },
           selectedLoan() {

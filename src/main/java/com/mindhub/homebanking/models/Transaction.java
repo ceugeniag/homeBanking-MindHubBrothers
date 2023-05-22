@@ -17,7 +17,6 @@ public class Transaction {
     private String description;
     private LocalDateTime transactionDate;
     private double balance;
-    private LocalDateTime date;
 
 
     //ASOCIACION
@@ -27,13 +26,12 @@ public class Transaction {
 
     //CONSTRUCTOR
     public Transaction() { }
-    public Transaction(TransactionType type, double amount, String description, LocalDateTime transactionDate, double balance, LocalDateTime date) {
+    public Transaction(TransactionType type, double amount, String description, LocalDateTime transactionDate, double balance) {
         this.type = type;
         this.amount = amount;
         this.description = description;
         this.transactionDate = transactionDate;
         this.balance = balance;
-        this.date = date;
     }
 
     //GETTER Y SETTER
@@ -81,12 +79,6 @@ public class Transaction {
         this.balance = balance;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
 
 }
 

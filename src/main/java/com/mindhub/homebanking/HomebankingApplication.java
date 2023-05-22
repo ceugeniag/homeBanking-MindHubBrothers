@@ -37,12 +37,12 @@ public class HomebankingApplication {
 			accountRepository.save(account2);
 			clientRepository.save(client1);
 
-			Transaction transaction1= new Transaction(TransactionType.CREDIT, 500.00, "Salary",LocalDateTime.now(), account1.getBalance(), LocalDateTime.now());
+			Transaction transaction1= new Transaction(TransactionType.CREDIT, 500.00, "Salary",LocalDateTime.now(), account1.getBalance());
 			transactionRepository.save(transaction1);
 			account1.addTransactions(transaction1);
 			accountRepository.save(account1);
 
-			Transaction transaction2= new Transaction(TransactionType.DEBIT,-50.00, "Bakery",LocalDateTime.now(), account2.getBalance(), LocalDateTime.now());
+			Transaction transaction2= new Transaction(TransactionType.DEBIT,-50.00, "Bakery",LocalDateTime.now(), account2.getBalance());
 			transactionRepository.save(transaction2);
 			account2.addTransactions(transaction2);
 			accountRepository.save(account2);
@@ -52,7 +52,7 @@ public class HomebankingApplication {
 			account2.setBalance(account2.getBalance()-150.00);
 			accountRepository.save(account2);
 
-			Transaction transaction3= new Transaction(TransactionType.DEBIT,-150.00, "Hotel",LocalDateTime.now(), account2.getBalance(), LocalDateTime.now());
+			Transaction transaction3= new Transaction(TransactionType.DEBIT,-150.00, "Hotel",LocalDateTime.now(), account2.getBalance());
 			transactionRepository.save(transaction3);
 			account2.addTransactions(transaction3);
 			accountRepository.save(account2);
@@ -60,7 +60,7 @@ public class HomebankingApplication {
 
 			account2.setBalance(account2.getBalance()+256.10);
 			accountRepository.save(account2);
-			Transaction transaction4= new Transaction(TransactionType.CREDIT,256.10, "Transfer",LocalDateTime.now(), account2.getBalance(), LocalDateTime.now());
+			Transaction transaction4= new Transaction(TransactionType.CREDIT,256.10, "Transfer",LocalDateTime.now(), account2.getBalance());
 			transactionRepository.save(transaction4);
 			account2.addTransactions(transaction4);
 			accountRepository.save(account2);
@@ -69,7 +69,7 @@ public class HomebankingApplication {
 
 			account1.setBalance(account1.getBalance()-50.10);
 			accountRepository.save(account1);
-			Transaction transaction5= new Transaction(TransactionType.DEBIT,-50.10, "Transfer",LocalDateTime.now(), account1.getBalance(), LocalDateTime.now());
+			Transaction transaction5= new Transaction(TransactionType.DEBIT,-50.10, "Transfer",LocalDateTime.now(), account1.getBalance());
 			account1.addTransactions(transaction5);
 			accountRepository.save(account1);
 			transactionRepository.save(transaction5);

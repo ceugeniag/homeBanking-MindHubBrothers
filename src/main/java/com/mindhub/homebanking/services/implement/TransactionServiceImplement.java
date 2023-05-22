@@ -25,6 +25,6 @@ public class TransactionServiceImplement implements TransactionService {
     }
     @Override
     public List<Transaction> getTransactionsByAccountAndDate(Account account, LocalDateTime startDate, LocalDateTime endDate){
-        return transactionRepository.findAllByAccountAndDateBetween(account,startDate,endDate);
+        return transactionRepository.findAllByAccountAndTransactionDateBetween(account,startDate,endDate);
     }
 }
