@@ -14,7 +14,7 @@ const app = createApp({
 methods: {
     loadData(){
         //Realiza una petición HTTP de tipo GET a la URL /clients con la librería axios.
-        axios.get('http://localhost:8080/api/clients')
+        axios.get('/api/clients')
         //Cuando la petición es respondida se ejecuta el método then
         //El método then guarda en la data de Vue el listado de clientes que llega en el JSON así como el JSON completo. 
         .then(response => {
@@ -30,7 +30,7 @@ methods: {
         this.postClient();
         },
     postClient(){
-        axios.post('http://localhost:8080/api/clients' ,{
+        axios.post('/api/clients' ,{
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email

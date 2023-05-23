@@ -13,7 +13,7 @@ const app = createApp ({
     },
     methods:{
         loadData(){
-            axios.get('http://localhost:8080/api/clients/current/accounts/'+ this.valorID)
+            axios.get('/api/clients/current/accounts/'+ this.valorID)
             .then(response => {
                 this.account = response.data;
                 console.log(this.account);
