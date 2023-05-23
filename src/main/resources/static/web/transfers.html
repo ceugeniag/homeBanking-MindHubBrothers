@@ -20,7 +20,7 @@
             </button>
             <a class="navbar-brand" href="./index.html">
             <img src="./assets/icono-logo.png" alt="icon" width="50" class="d-inline-block align-text-center">
-            MindHub Brothers</a><a @click="logout" href="#"><img src="./assets/cerrar.png" alt="" width="50" ></a>
+            MindHub Brothers</a> <a @click="logout" href="#"><img src="./assets/cerrar.png" alt="" width="50" ></a>
             </div>
             <div class="collapse" id="navbarToggleExternalContent">
                 <div class="p-4">
@@ -29,12 +29,10 @@
                     <h6 class="text-dark h4"><a href="./transfers.html">Transfers</a></h6>
                     <h6 class="text-dark h4"><a href="./loan-application.html">Apply loans</a></h6>
                     <h6 class="text-dark h4"><a href="#">Get in Touch!</a></h6>
-                    <h6 class="text-dark h4"><a href="./index.html">Log out</a></h6>
+                    <h6 class="text-dark h4"><a @click="logout" href="./index.html">Log out</a></h6>
                 </div>
             </div>
             </nav>
-        <!-- <img class="img-fluid" src="./assets/getintouchBanner.png" alt="">
-        <a href="./accounts.html"><img class= "img-fluid" src="./assets/loanbanner.png" alt=""></a> -->
             <main>
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -63,35 +61,36 @@
                 <div class="contenedor">
                     <div class="main">
                         <input type="checkbox" id="chk" aria-hidden="true">
-                            <form>
+                        <div class="signup">    
+                        <form>
                             <label for="chk" aria-hidden="true">Transfer to my own account</label>
                             <!-- <input v-model="numberAccountFrom" type="text" name="txt" placeholder="Account From" required=""> -->
-                            <select v-model="numberAccountFrom" name="" id="" >
+                            <select v-model="numberAccountFrom" name="numberAccountFrom" id="numberAccountFrom" >
                                 <option v-for="account of clients.accounts" :value="account.number">{{account.number}}</option>
                             </select>
-                            <select  v-model="numberAccountTo" name="" id="">
+                            <select  v-model="numberAccountTo" name="numberAccountTo" id="numberAccountTo">
                                 <template v-for="account of clients.accounts">
                                     <option :value="account.number">{{account.number}}</option>
                                 </template>
                             </select>
                             <!-- <input v-model="numberAccountTo" type="text" name="txt" placeholder="Account To" required=""> -->
-                            <input v-model="amount" type="text" name="amount" placeholder="Amount" required="">
+                            <input v-model="amount" type="text" name="amount" placeholder="Amount" required>
                             <input v-model="description" type="text" name="description" placeholder="Description" required="">
                             <button type="submit" value="submit" @click="transfer">TRANSFER</button>
                             </form>
                         </div>
                         <div class="login">
                             <form>
-                            <label for="chk" aria-hidden="true">Transfer to another account</label>
-                            <select v-model="numberAccountFrom" name="numberAccountFrom" id="" >
+                            <label for="chk" aria-hidden="true">To another account</label>
+                            <select v-model="numberAccountFrom" name="numberAccountFrom" id="numberAccountFrom2" >
                                 <template v-for="account of clients.accounts">
                                     <option :value="account.number">{{account.number}} </option>
                                 </template>
                             </select>
                             <!-- <input v-model="numberAccountFrom" type="text" name="txt" placeholder="Account From" required=""> -->
-                            <input v-model="numberAccountTo" type="text" name="txt" placeholder="Account To" required="">
-                            <input v-model="amount" type="text" name="amount" placeholder="Amount" required="">
-                            <input v-model="description" type="text" name="description" placeholder="Description" required="">
+                            <input v-model="numberAccountTo" type="text" name="txt" placeholder="Account To" required>
+                            <input v-model="amount" type="text" name="amount" placeholder="Amount" required>
+                            <input v-model="description" type="text" name="description" placeholder="Description" required>
                             <button type="button" value="submit" @click="transfer">TRANSFER</button>
                             </form>
                         </div>
@@ -102,8 +101,8 @@
             <footer class="d-flex justify-content-between p-5 bg-light">
                 <div class="redes">
                     <a href="tel:+3624767901"><img src="./assets/wappicon.png" alt="logowapp" width="40"></a>
-                    <a href="https://github.com/ceugeniag"><img src="./assets/logogithub.png" alt="logogithub"width="40"></a>
-                    <a href="https://www.linkedin.com/in/gonzalezceugenia/"><img src="./assets/pngwing.com.png" alt="logolinkedin"width="40"></a>
+                    <a href="https://github.com/ceugeniag"><img src="./assets/logogithub.png" alt="logogithub" width="40"></a>
+                    <a href="https://www.linkedin.com/in/gonzalezceugenia/"><img src="./assets/pngwing.com.png" alt="logolinkedin" width="40"></a>
                 </div>
                 <h3>Cohort 44 - C. Eugenia Gonzalez</h3>
             </footer>

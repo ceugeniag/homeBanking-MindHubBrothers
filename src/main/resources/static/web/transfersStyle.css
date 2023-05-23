@@ -13,11 +13,7 @@ a{
     height: auto;
 }
 main{
-    /* background-color: #f5eadb74; */
-    min-height: 85vh;
-    /* background-size: contain;
-    background-position-y: 100%;
-    background-repeat: no-repeat; */
+    min-height: 105vh;
     background-color: #f7e8d4;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%2365481f' fill-opacity='0.24' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
     display: flex;
@@ -119,6 +115,8 @@ footer{
     border-radius: 60% / 10%;
     transform: translateY(-180px);
     transition: 0.8s ease-in-out;
+    display: block !important;
+
   }
   .login label {
     color: #65481f;
