@@ -11,7 +11,6 @@ public class TransactionDTO {
     private String description;
     private LocalDateTime transactionDate;
     private double balance;
-    private LocalDateTime date;
     Set <AccountDTO> accounts;
 
     //CONSTRUCTOR
@@ -22,7 +21,7 @@ public class TransactionDTO {
         this.description = transaction.getDescription();
         this.transactionDate = transaction.getTransactionDate();
         this.balance = transaction.getBalance();
-        this.transactionDate = transaction.getDate();
+
 
     }
 
@@ -46,5 +45,4 @@ public class TransactionDTO {
         return balance;
     }
 
-    public LocalDateTime getDate() { return date; }
 }

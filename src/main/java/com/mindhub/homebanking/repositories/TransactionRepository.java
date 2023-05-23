@@ -9,6 +9,6 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface TransactionRepository extends JpaRepository <Transaction, Long> {
-    List<Transaction> findAllByAccountAndDateBetween (Account account, LocalDateTime start, LocalDateTime end);
+    List<Transaction> findAllByAccountAndTransactionDateBetween (Account account, LocalDateTime start, LocalDateTime end);
     List<Transaction> findAllByAccount(Account account);
 }
