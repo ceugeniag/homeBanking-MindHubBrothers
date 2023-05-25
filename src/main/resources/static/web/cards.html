@@ -62,7 +62,9 @@
         <h1 class="titule">YOURS CARDS</h1>
         <section class="d-flex justify-content-around flex-wrap" v-if="cards.length != 0 ">
         <div style="gap:5rem" class="d-flex flex-wrap justify-content-center">
-        <template v-for="card of debit">
+            <div style="gap:5rem" class="d-flex flex-column">
+            <h3 class="titule">Debit cards</h3>
+            <template v-for="card of debit">
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front" :class="card.colorType">
@@ -143,11 +145,10 @@
                 </div>
                 <!-- <button :key="number" @click="deleteCards(card.number)">Delete card</button> -->
             </div>
-        </template>
-        <!-- </div> -->
-        <!-- </section>
-        <section class="d-flex justify-content-around flex-wrap"> -->
-        <!-- <div style="gap:5rem" class="d-flex flex-wrap justify-content-center" v-if="cards.length != 0 "> -->
+            </template>
+            </div>
+            <div style="gap:5rem" class="d-flex flex-column">
+            <h3 class="titule">Credit cards</h3>
             <template v-for="card of credit">
                 <div class="flip-card">
                     <div class="flip-card-inner">
@@ -231,12 +232,13 @@
                 </div>
             </template>
             </div>
+            </div>
         </section>
     <div v-else>
         <h2>You don't have any card.</h2>
     </div>
     <template v-if="cards.length != 6">
-        <button class="buttonCreated"><a href="./create-cards.html">Get a new card!</a></button>
+        <button style="gap:5rem" class="buttonCreated m-5"><a href="./create-cards.html">Get a new card!</a></button>
     </template>
     <template v-else>
     </template>

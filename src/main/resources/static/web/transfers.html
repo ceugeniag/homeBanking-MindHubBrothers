@@ -66,10 +66,10 @@
                             <label for="chk" aria-hidden="true">Transfer to my own account</label>
                             <!-- <input v-model="numberAccountFrom" type="text" name="txt" placeholder="Account From" required=""> -->
                             <select v-model="numberAccountFrom" name="numberAccountFrom" id="numberAccountFrom" >
-                                <option v-for="account of clients.accounts" :value="account.number">{{account.number}}</option>
+                                <option v-for="account of accounts" :value="account.number">{{account.number}}</option>
                             </select>
                             <select  v-model="numberAccountTo" name="numberAccountTo" id="numberAccountTo">
-                                <template v-for="account of clients.accounts">
+                                <template v-for="account of accounts">
                                     <option :value="account.number">{{account.number}}</option>
                                 </template>
                             </select>
@@ -83,7 +83,7 @@
                             <form>
                             <label for="chk" aria-hidden="true">To another account</label>
                             <select v-model="numberAccountFrom" name="numberAccountFrom" id="numberAccountFrom2" >
-                                <template v-for="account of clients.accounts">
+                                <template v-for="account of accounts">
                                     <option :value="account.number">{{account.number}} </option>
                                 </template>
                             </select>

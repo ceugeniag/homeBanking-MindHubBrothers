@@ -1,5 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.CardDTO;
+import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardType;
 import com.mindhub.homebanking.models.Client;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 public class CardController {
@@ -24,6 +27,11 @@ public class CardController {
     private CardService cardService;
     @Autowired
     private ClientService clientService;
+
+    @GetMapping("/api/cards")
+    public List<CardDTO> getCards() {
+        return cardService.getCards();
+    }
     @PostMapping(path = "/api/clients/current/cards")
     public ResponseEntity<Object> createCard(
             @RequestParam CardType cardType,
@@ -77,7 +85,7 @@ public class CardController {
 }
 
 //Eliminar tarjetas:
-    @PutMapping("api/clients/current/cards") //Este endpoint?
+    @PutMapping("api/clients/current/cards")
     public ResponseEntity<Object> deleteCards (@RequestParam String number, Authentication authentication){
         //Verifico si el cliente existe
         Client currentClient = clientService.findByEmail(authentication.getName());

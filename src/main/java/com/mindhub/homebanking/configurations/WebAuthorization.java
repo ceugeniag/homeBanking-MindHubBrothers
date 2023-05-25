@@ -23,39 +23,34 @@ public class WebAuthorization{
     protected SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
         //Cross-Origin Resource Sharing
         http.cors().and().authorizeRequests()
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-                .antMatchers("/web/index.html").permitAll()
-                .antMatchers("/web/assets/**").permitAll()
-                .antMatchers("/web/index.js").permitAll()
-                .antMatchers("/web/indexStyle.css").permitAll()
+                //ALL
+                .antMatchers(HttpMethod.GET,"/web/index.html", "/web/index.js", "/web/indexStyle.css").permitAll()
+                .antMatchers(HttpMethod.GET,"/web/assets/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/web/index.html").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/login").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/logout").permitAll()
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN")
-                .antMatchers("/admin/manager.html").hasAuthority("ADMIN")
-                .antMatchers("/admin/manager.js").hasAuthority("ADMIN")
-                .antMatchers("/web/account.html").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"api/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"api/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"api/transactions").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"api/loans").hasAuthority("CLIENT")
+
+                //ADMIN
+                .antMatchers(HttpMethod.GET,"/rest/**","/h2-console").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/admin/manager.html", "/admin/manager.js").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/admin/loan-application-manager.js", "/admin/loan-application-manager.html").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST,"api/loans/manager").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.PUT, "/api/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST, "api/loans/manager").hasAuthority("ADMIN")
-                .antMatchers("/web/cards.html").hasAuthority("CLIENT")
-                .antMatchers("/web/accounts.html").hasAnyAuthority("CLIENT","ADMIN")
-                .antMatchers("/web/accounts.js").hasAnyAuthority("CLIENT","ADMIN")
-                .antMatchers("/web/cards.js").hasAuthority("CLIENT")
-                .antMatchers("/web/account.js").hasAuthority("CLIENT")
-                .antMatchers("/web/transfer.js").hasAuthority("CLIENT")
-                .antMatchers("/web/transfer.html").hasAuthority("CLIENT")
-                .antMatchers("/web/loan-application.js").hasAuthority("CLIENT")
-                .antMatchers("/web/loan-application.html").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/web/accounts.html", "/web/accounts.js", "/web/accountsstyle.css").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
+
+                //CLIENTS
+                .antMatchers(HttpMethod.GET,"/web/create-cards.html", "/web/create-cards.js", "/web/create-cards.css").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/web/cards.html", "/web/cardStyle.css", "/web/cards.js").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/web/accounts.html", "/web/accounts.js", "/web/accountsstyle.css").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/web/account.js", "/web/account.html", "/web/accountStyle.css").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/web/transfer.js", "/web/transfer.html", "/web/transferStyle.css").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/web/loan-application.js", "/web/loan-application.html", "/web/loan-applicationStyle.css").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/api/clients/current/accounts/{id}","/api/cards", "api/clients/current/accounts", "api/clients/current/accounts/{id}","api/clients/{id}", "/api/clients/current", "/api/loans", "/api/transactions").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"api/clients/current/accounts","/api/clients/current/cards", "api/card/payment", "api/clients", "/api/loans", "api/current/loans", "api/transactions" ).hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.PUT,"/api/clients/current/accounts", "api/clients/current/cards").hasAuthority("CLIENT")
+                //.anyRequest().denyAll()
         ;
+
 
         http.formLogin()
                 .usernameParameter("email")
