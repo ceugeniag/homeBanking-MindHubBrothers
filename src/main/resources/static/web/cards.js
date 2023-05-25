@@ -10,7 +10,6 @@ const app = createApp ({
             valorID :(new URLSearchParams(location.search)).get("id"),
             number:"",
             active:[],
-            // actualDate: new Date().toLocaleDateString().split(",")[0].split("/").reverse().join("-")
         }
     },
     created(){
@@ -18,15 +17,13 @@ const app = createApp ({
     },
     methods:{
         loadData(){
-            axios.get('/api/clients/current')
+            axios.get("/api/cards")
             .then(response => {
-                this.clients = response.data;
-                console.log(this.clients);
-                this.cards= this.clients.cards;
+                this.cards = response.data;
                 console.log(this.cards);
                 this.credit= this.cards.filter(card => card.type === "CREDIT" && card.active);
                 console.log(this.credit);
-                this.debit=this.cards.filter(card => card.type === "DEBIT" && card.active);
+                this.debit= this.cards.filter(card => card.type === "DEBIT" && card.active);
                 console.log(this.debit);
             })
             .catch(error=>{

@@ -21,20 +21,18 @@ import static java.util.stream.Collectors.toList;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-    //private AccountRepository accountRepository;
     @Autowired
     private ClientService clientService;
-    //private ClientRepository clientRepository;
 
     @GetMapping ("api/clients/current/accounts")
     public List<AccountDTO> getAccount() {
         return accountService.getAccount();
     }
 
-    @GetMapping("api/clients/current/accounts/{id}")
+   /* @GetMapping("api/clients/current/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
         return accountService.getAccountDTO(id);
-    }
+    }*/
 
     @PostMapping(path = "api/clients/current/accounts")
     public ResponseEntity<Object> createAccount(@RequestParam AccountType accountType, Authentication authentication){
@@ -80,6 +78,17 @@ public class AccountController {
         accountService.saveAccount(account);
         return new ResponseEntity<>("Account deleted successfully", HttpStatus.ACCEPTED);
     }
-    //Me falta eliminar las transacciones
+    @GetMapping("/api/clients/current/accounts/{id}")
+    public ResponseEntity<Object> getAccount(@PathVariable Long id, Authentication authentication){
 
+        Client currentClient = clientService.findByEmail(authentication.getName());
+        Account account = accountService.findById(id);
+        AccountDTO accountDTO = accountService.getAccountDTO(id);
+
+        if ( !currentClient.getAccounts().stream().filter( accountCLient -> accountCLient.getId() == account.getId() ).collect(toList()).isEmpty() ){
+            return new ResponseEntity<>(accountDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("This account is not yours", HttpStatus.FORBIDDEN);
+        }
+    }
 }

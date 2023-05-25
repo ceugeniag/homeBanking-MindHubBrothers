@@ -23,7 +23,7 @@ const app = createApp ({
             .then(response => {
                 this.clients = response.data;
                 console.log(this.clients);
-                this.accounts = this.clients.accounts;
+                this.accounts = this.clients.accounts.filter(account => account.active)
                 console.log(this.accounts);
 
 

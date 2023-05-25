@@ -30,7 +30,7 @@ const app = createApp ({
             .then(response => {
                 this.client = response.data;
                 console.log(this.client);
-                this.accounts= this.client.accounts;
+                this.accounts = this.client.accounts.filter(account => account.active)
                 console.log(this.accounts);
             })
             .catch(error=>{

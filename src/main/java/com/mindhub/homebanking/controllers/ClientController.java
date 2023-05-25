@@ -24,12 +24,11 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
-    //private ClientRepository clientRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AccountService accountService;
-    //private  AccountRepository accountRepository;
+
 
     @GetMapping("/api/clients")
     public List<ClientDTO> getClient() {

@@ -8,9 +8,9 @@ public class ClientDTO {
     private String email;
     private String firstName;
     private String lastName;
-    public Set<AccountDTO> accounts;
-    public Set<ClientLoanDTO> loans;
-    public Set<CardDTO> cards;
+    private Set<AccountDTO> accounts;
+    private Set<ClientLoanDTO> loans;
+    private Set<CardDTO> cards;
 
     //CONSTRUCTOR
     public ClientDTO(Client client) {
